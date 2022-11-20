@@ -1,0 +1,14 @@
+.elements {
+  margin: 50px 0 0;
+  max-width: 880px;
+  width: 100%;
+  min-height: 744px;
+}
+
+@media screen and (max-width: 879px) {
+  .elements {
+    max-width: 282px;
+    min-height: 2268px;
+    margin: 36px auto 0;
+  }
+}

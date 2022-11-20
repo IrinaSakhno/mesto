@@ -1,0 +1,8 @@
+.popup__form-field {
+  border: none;
+  border-bottom: 1px solid #b1b3b1;
+  outline: none;
+  max-width: 358px;
+  min-height: 27px;
+  padding: 0;
+}
