@@ -1,11 +1,11 @@
 .profile__info {
   display: flex;
   justify-content: flex-start;
-  margin: 24px 0 0 30px;
+  margin: 22px 0 0 28px;
   max-width: 336px;
 }
 
-@media screen and (max-width: 879px) {
+@media screen and (max-width: 896px) {
   .profile__info {
     margin-top: 24px;
     margin-left: 49px;

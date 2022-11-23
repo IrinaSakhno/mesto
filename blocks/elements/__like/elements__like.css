@@ -10,7 +10,3 @@
   background-image: url(../../../images/like.svg);
   background-size: contain;
 }
-
-.elements__like:active {
-  background-image: url(../../../images/like-active.png);
-}

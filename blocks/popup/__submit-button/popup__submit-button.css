@@ -1,20 +1,23 @@
 .popup__submit-button {
   display: flex;
-  width: 358px;
-  height: 50px;
+  width: 100%;
+  min-height: 50px;
   cursor: pointer;
   background-color: #000000;
-  background-image: url(../../../images/submit-button.png);
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
+  color: #ffffff;
+  font-size: 18px;
+  line-height: 1.22;
+  border-radius: 2px;
   margin: 18px 0 0 0;
+  align-items: center;
+  justify-content: center;
 }
 
-@media screen and (max-width: 879px) {
+@media screen and (max-width: 896px) {
   .popup__submit-button {
-    width: 238px;
-    height: 46px;
-    margin: 15px 0 0 0;
+    min-height: 46px;
+    margin-top: 15px;
+    font-size: 14px;
+    line-height: 1.21;
   }
 }

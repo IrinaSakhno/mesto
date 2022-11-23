@@ -5,17 +5,21 @@
   line-height: 1.14;
   text-align: left;
   color: #ffffff;
-  display: flex;
   max-width: 336px;
   margin: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 294px;
 }
 
-@media screen and (max-width: 879px) {
+@media screen and (max-width: 896px) {
   .profile__name {
     font-size: 27px;
     line-height: 1.22;
     align-self: center;
     margin: 0 auto;
     min-height: 6;
+    max-width: 189px;
   }
 }

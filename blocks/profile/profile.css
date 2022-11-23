@@ -3,14 +3,12 @@
   justify-content: space-between;
   margin: 40px auto 0;
   max-width: 880px;
-  min-height: 120px;
 }
 
-@media screen and (max-width: 879px) {
+@media screen and (max-width: 896px) {
   .profile {
     max-width: 282px;
-    min-height: 286px;
-    margin: 42px auto 0;
+    margin-top: 42px;
     flex-direction: column;
   }
 }

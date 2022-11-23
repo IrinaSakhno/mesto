@@ -14,24 +14,21 @@
           alt="Логотип"
           class="header__logo"
         >
-        <hr class="header__line">
       </header>
       <main class="main">
         <section class="profile">
           <div class="profile__about">
-            <div class="profile__circle">
               <img
                 src="./images/avatar.jpg"
                 alt="Жак-Ив Кусто"
                 class="profile__avatar"
               >
-            </div>
             <div class="profile__info">
-              <div class="profile__description"><h1 class="profile__name" id="current-name">
+              <div class="profile__description"><h1 class="profile__name">
                 Жак-Ив Кусто
               </h1>
-              <p class="profile__occupation" id="current-occupation">Исследователь океана</p>
-            </div><button class="profile__edit-button link" id="edit-button" type="button"></button>
+              <p class="profile__occupation">Исследователь океана</p>
+            </div><button class="profile__edit-button link" type="button"></button>
             </div>
           </div>
           <button class="profile__add-button link" type="button"></button>
@@ -46,7 +43,7 @@
                 class="elements__image"
               >
               <div class="elements__card">
-                <p class="elements__card-name">Карачаевск</p>
+                <h2 class="elements__card-name">Карачаевск</h2>
                 <button class="elements__like link" type="button"></button>
               </div>
             </li>
@@ -57,7 +54,7 @@
                 class="elements__image"
               >
               <div class="elements__card">
-                <p class="elements__card-name">Гора Эльбрус</p>
+                <h2 class="elements__card-name">Гора Эльбрус</h2>
                 <button class="elements__like link" type="button"></button>
               </div>
             </li>
@@ -68,7 +65,7 @@
                 class="elements__image"
               >
               <div class="elements__card">
-                <p class="elements__card-name">Домбай</p>
+                <h2 class="elements__card-name">Домбай</h2>
                 <button class="elements__like link" type="button"></button>
               </div>
             </li>
@@ -79,7 +76,7 @@
                 class="elements__image"
               >
               <div class="elements__card">
-                <p class="elements__card-name">Гора Эльбрус</p>
+                <h2 class="elements__card-name">Гора Эльбрус</h2>
                 <button class="elements__like link" type="button"></button>
               </div>
             </li>
@@ -90,7 +87,7 @@
                 class="elements__image"
               >
               <div class="elements__card">
-                <p class="elements__card-name">Домбай</p>
+                <h2 class="elements__card-name">Домбай</h2>
                 <button class="elements__like link" type="button"></button>
               </div>
             </li>
@@ -101,32 +98,30 @@
                 class="elements__image"
               >
               <div class="elements__card">
-                <p class="elements__card-name">Карачаево-Черкессия</p>
+                <h2 class="elements__card-name">Карачаево-Черкессия</h2>
                 <button class="elements__like link" type="button"></button>
               </div>
             </li>
           </ul>
         </section>
-        <section class="popup">
-            
-            <div class="popup__container">
-                <button class="popup__close-button link" type="button"></button>
-                <h2 class="popup__title">Редактировать профиль</h2>
-                <form class="popup__form" id="form">
-                    <input class="popup__form-field" id="name" type="text" value="Жак-Ив Кусто">
-                    <input class="popup__form-field" id="occupation" type="text" value="Исследователь океана">
-                <input class="popup__submit-button link" type="submit">
-            </form>
-                
-            </div>
-            <div class="popup__overlay"></div>
-    
-        </section>
       </main>
       <footer class="footer">
         <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
       </footer>
+      <section class="popup">
+            
+        <div class="popup__container">
+            <button class="popup__close-button link" type="button"></button>
+            <h2 class="popup__title">Редактировать профиль</h2>
+            <form class="popup__form" name="form">
+                <input class="popup__form-field popup__form-field-name" name="name" type="text" value="Жак-Ив Кусто" placeholder="Введите имя">
+                <input class="popup__form-field popup__form-field-occupation" name="occupation" type="text" value="Исследователь океана" placeholder="Введите свой тип занятости">
+            <button class="popup__submit-button link" type="submit">Сохранить</button>
+        </form>
+            
+        </div>
+      </section>
     </div>    
-    <script src="./pages/index.js" defer></script>
+    <script src="./scripts/index.js" defer></script>
   </body>
 </html>
