@@ -9,16 +9,16 @@
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-  position: relative;
-  top: -40px;
-  right: -400px;
+  position: absolute;
+  top: -39px;
+  right: -39px;
 }
 
 @media screen and (max-width: 896px) {
   .popup__close-button {
     width: 20px;
     height: 20px;
-    top: -42px;
-    right: -240px;
+    top: -36px;
+    right: 1px;
   }
 }

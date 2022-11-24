@@ -16,5 +16,7 @@
     background-size: contain;
     width: 282px;
     height: 52px;
+    margin-top: 31px;
+    display: block;
   }
 }

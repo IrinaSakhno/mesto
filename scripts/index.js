@@ -1,5 +1,5 @@
-var editButton = document.querySelector(".profile__edit-button");
-var closeButton = document.querySelector(".popup__close-button");
+let editButton = document.querySelector(".profile__edit-button");
+let closeButton = document.querySelector(".popup__close-button");
 let formElement = document.querySelector(".popup__form");
 let nameInput = document.querySelector(".popup__form-field-name");
 let jobInput = document.querySelector(".popup__form-field-occupation");
@@ -9,6 +9,8 @@ let currentOccupation = document.querySelector(".profile__occupation");
 
 function openPopup() {
   popup.classList.add("popup_opened");
+  nameInput.value = currentName.innerText;
+  jobInput.value = currentOccupation.innerText;
 }
 
 function closePopup() {
