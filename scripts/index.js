@@ -30,19 +30,18 @@ const closeProfileFormButton = document.querySelector(".popup__close-button");
 const profileFormSubmit = document.querySelector(".popup__form");
 const nameInput = document.querySelector(".popup__form-field-name");
 const jobInput = document.querySelector(".popup__form-field-occupation");
-const profileForm = document.querySelector(".popup");
+const profileForm = document.querySelector(".popup__change-name");
 const currentName = document.querySelector(".profile__name");
 const currentOccupation = document.querySelector(".profile__occupation");
-const newCardPopup = document.querySelector(".popup__new-card");
+const newCardPopup = document.querySelector("#popup__new-card");
 const addNewCardButton = document.querySelector(".profile__add-button");
 const closeNewCardButton = document.querySelector(".close");
 const createNewCardButton = document.querySelector(".popup__create-button");
 const cardNameInput = document.querySelector(".popup__form-field-card");
 const urlInput = document.querySelector(".popup__form-field-source");
 const newCardForm = document.querySelector(".popup__form_card");
-const pictureSection = document.querySelector(".popup__opened-picture");
-const closePictureSectionButton = document.querySelector(".popup__close-button_image"
-);
+const pictureSection = document.querySelector("#popup__opened-picture");
+const closePictureSectionButton = document.querySelector(".popup__close-button_image");
 
 function openPicturePopup(card) {
   pictureSection.classList.add("popup_opened");
