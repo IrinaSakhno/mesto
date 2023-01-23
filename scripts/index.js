@@ -29,13 +29,11 @@ function closePopup(popup) {
   popup.classList.add("popup_closed");
 };
 
-function openPicturePopup(card) {
+function openPicturePopup(name, link) {
   openPopup(pictureSection);
-  const imageToShow = card.querySelector(".elements__image");
-  const descriptionToShow = card.querySelector(".elements__card-name");
-  openedPicture.alt = imageToShow.alt;
-  openedPictureCaption.textContent = descriptionToShow.textContent;
-  openedPicture.src = imageToShow.src;
+  openedPicture.alt = name;
+  openedPictureCaption.textContent = name;
+  openedPicture.src = link;
 }
 
 function closePicturePopup() {
@@ -82,28 +80,6 @@ function removeCard() {
   deletingItem.remove();
 }
 
-// function addCard(name, link) {
-//   const cardTemplate = document.querySelector("#new-card").content;
-//   const galleryElement = cardTemplate
-//     .querySelector(".elements__item")
-//     .cloneNode(true);
-//   const galleryImage = galleryElement.querySelector(".elements__image");
-//   galleryImage.src = link;
-//   galleryImage.alt = name;
-//   galleryElement.querySelector(".elements__card-name").textContent = name;
-
-//   gallery.prepend(galleryElement);
-
-//   const likeButton = galleryElement.querySelector(".elements__like");
-//   likeButton.addEventListener("click", likeCard);
-
-//   const trashButton = galleryElement.querySelector(".elements__trash");
-//   trashButton.addEventListener("click", removeCard);
-//   galleryImage.addEventListener("click", function () {
-//     openPicturePopup(galleryElement);
-//   });
-// }
-
 function fullfillTemplate(name, link) {
   const cardTemplate = document.querySelector("#new-card").content;
   const galleryElement = cardTemplate
@@ -121,7 +97,7 @@ function fullfillTemplate(name, link) {
   trashButton.addEventListener("click", removeCard);
 
   galleryImage.addEventListener("click", function () {
-    openPicturePopup(galleryElement);
+    openPicturePopup(name, link);
   });
 
   return galleryElement;
