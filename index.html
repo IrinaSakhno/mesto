@@ -34,23 +34,14 @@
 
         <section class="elements">
           <ul class="elements__gallery">
-            <template id="new-card">
-              <li class="elements__item">
-                <img src="src" alt="" class="elements__image link">
-                <button class="elements__trash link" type="button"></button>
-                <div class="elements__card">
-                  <h2 class="elements__card-name"></h2>
-                  <button class="elements__like link" type="button"></button>
-                </div>
-              </li>
-            </template>
+            
           </ul>
         </section>
       </main>
       <footer class="footer">
         <p class="footer__copyright">&copy; 2023 Mesto Russia</p>
       </footer>
-      <section class="popup" id="popup__change-name">
+      <div class="popup" id="popup__change-name">
         <div class="popup__container">
           <button class="popup__close-button link" type="button"></button>
           <h2 class="popup__title">Редактировать профиль</h2>
@@ -70,9 +61,9 @@
             </button>
           </form>
         </div>
-      </section>
+      </div>
 
-      <section class="popup" id="popup__new-card">
+      <div class="popup" id="popup__new-card">
         <div class="popup__container">
           <button class="popup__close-button close link" type="button"></button>
           <h2 class="popup__title">Новое место</h2>
@@ -95,21 +86,32 @@
             </button>
           </form>
         </div>
-      </section>
+      </div>
 
-      <section class="popup" id="popup__opened-picture">
+      <div class="popup popup_darker-background" id="popup__opened-picture">
         <div class="popup__picture-view">
           <button
             class="popup__close-button popup__close-button_image close link"
             type="button"
           ></button>
           <figure class="popup__picture-with-caption">
-            <img class="popup__picture" src="src" alt="">
+            <img class="popup__picture" src="" alt="">
             <figcaption class="popup__picture-caption"></figcaption>
           </figure>
         </div>
-      </section>
+      </div>
     </div>
+    <script src="./scripts/initial-cards.js" defer></script>
     <script src="./scripts/index.js" defer></script>
   </body>
+  <template id="new-card">
+    <li class="elements__item">
+      <img src="" alt="" class="elements__image link">
+      <button class="elements__trash link" type="button"></button>
+      <div class="elements__card">
+        <h2 class="elements__card-name"></h2>
+        <button class="elements__like link" type="button"></button>
+      </div>
+    </li>
+  </template>
 </html>
