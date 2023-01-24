@@ -31,9 +31,9 @@ function closePopup(popup) {
 
 function openPicturePopup(name, link) {
   openPopup(pictureSection);
+  openedPicture.src = link;
   openedPicture.alt = name;
   openedPictureCaption.textContent = name;
-  openedPicture.src = link;
 }
 
 function closePicturePopup() {
@@ -59,7 +59,7 @@ function closeNamePopup() {
   closePopup(newCardPopup);
 }
 
-function formSubmitHandler(evt) {
+function submitProfileForm(evt) {
   evt.preventDefault();
   currentName.textContent = nameInput.value;
   currentOccupation.textContent = jobInput.value;
@@ -80,7 +80,7 @@ function removeCard() {
   deletingItem.remove();
 }
 
-function fullfillTemplate(name, link) {
+function createCard(name, link) {
   const cardTemplate = document.querySelector("#new-card").content;
   const galleryElement = cardTemplate
     .querySelector(".elements__item")
@@ -109,7 +109,7 @@ function addToDom (card) {
 
 function createNewCard(evt) {
   evt.preventDefault();
-  const card = fullfillTemplate(cardNameInput.value, urlInput.value);
+  const card = createCard(cardNameInput.value, urlInput.value);
   addToDom(card);
 
   closeNewCardForm();
@@ -117,11 +117,11 @@ function createNewCard(evt) {
 }
 
 initialCards.forEach(function (item) {
-  addToDom(fullfillTemplate(item.name, item.link));
+  addToDom(createCard(item.name, item.link));
 });
 
 buttonEditProfile.addEventListener("click", openNamePopup);
-formSubmitProfile.addEventListener("submit", formSubmitHandler);
+formSubmitProfile.addEventListener("submit", submitProfileForm);
 buttonCloseProfileForm.addEventListener("click", closeNamePopup);
 buttonAddNewCard.addEventListener("click", openNewCardForm);
 buttonCloseNewCard.addEventListener("click", closeNewCardForm);
