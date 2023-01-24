@@ -30,10 +30,10 @@ function closePopup(popup) {
 };
 
 function openPicturePopup(name, link) {
-  openPopup(pictureSection);
   openedPicture.src = link;
   openedPicture.alt = name;
   openedPictureCaption.textContent = name;
+  openPopup(pictureSection);
 }
 
 function closePicturePopup() {
