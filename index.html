@@ -42,20 +42,31 @@
         <p class="footer__copyright">&copy; 2023 Mesto Russia</p>
       </footer>
       <div class="popup" id="popup__change-name">
+        <div class="popup__overlay"></div>
         <div class="popup__container">
           <button class="popup__close-button link" type="button"></button>
           <h2 class="popup__title">Редактировать профиль</h2>
-          <form class="popup__form" name="form">
+          <form class="popup__form" name="form" novalidate>
             <input
               class="popup__form-field popup__form-field-name"
               name="name"
+              id="name-input"
               type="text"
-              placeholder="Введите имя">
-            <input
+              placeholder="Введите имя" 
+              minlength="2"
+              maxlength="40"
+              required>
+            <span class="popup__input-error name-input-error"></span>
+              <input
               class="popup__form-field popup__form-field-occupation"
               name="occupation"
+              id="occupation-input"
               type="text"
-              placeholder="Введите свой тип занятости">
+              placeholder="Введите свой тип занятости"
+              minlength="2"
+              maxlength="200"
+              required>
+              <span class="popup__input-error occupation-input-error"></span>
             <button class="popup__submit-button link" type="submit">
               Сохранить
             </button>
@@ -64,20 +75,29 @@
       </div>
 
       <div class="popup" id="popup__new-card">
-        <div class="popup__container">
+        <div class="popup__overlay"></div>
+          <div class="popup__container">
           <button class="popup__close-button close link" type="button"></button>
           <h2 class="popup__title">Новое место</h2>
-          <form class="popup__form popup__form_card" name="form">
+          <form class="popup__form popup__form_card" name="form" novalidate>
             <input
               class="popup__form-field popup__form-field-card"
               name="card"
+              id="placename-input"
               type="text"
-              placeholder="Название">
+              placeholder="Название"
+              minlength="2"
+              maxlength="30"
+              required>
+            <span class="popup__input-error placename-input-error"></span>
             <input
               class="popup__form-field popup__form-field-source"
               name="source"
+              id="placelink-input"
               type="url"
-              placeholder="Ссылка на картинку">
+              placeholder="Ссылка на картинку"
+              required>
+            <span class="popup__input-error placelink-input-error"></span>
             <button
               class="popup__submit-button popup__create-button link"
               type="submit"
@@ -89,6 +109,7 @@
       </div>
 
       <div class="popup popup_darker-background" id="popup__opened-picture">
+        <div class="popup__overlay"></div>
         <div class="popup__picture-view">
           <button
             class="popup__close-button popup__close-button_image close link"
@@ -103,6 +124,7 @@
     </div>
     <script src="./scripts/initial-cards.js" defer></script>
     <script src="./scripts/index.js" defer></script>
+    <script src="./scripts/validate.js" defer></script>
   </body>
   <template id="new-card">
     <li class="elements__item">

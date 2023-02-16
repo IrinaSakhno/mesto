@@ -127,3 +127,20 @@ buttonAddNewCard.addEventListener("click", openNewCardForm);
 buttonCloseNewCard.addEventListener("click", closeNewCardForm);
 newCardForm.addEventListener("submit", createNewCard);
 buttonClosePictureSection.addEventListener("click", closePicturePopup);
+
+document.addEventListener('keydown', function (e) {
+  if(e.key === "Escape") {
+    closeNamePopup(e.target);
+    closeNewCardForm(e.target);
+    closePicturePopup(e.target);
+  };
+}); 
+
+const overlays = document.querySelectorAll('.popup__overlay');
+overlays.forEach((overlay) => {
+  overlay.addEventListener('click', function (e) {
+    closeNamePopup(e.currentTarget);
+    closeNewCardForm(e.currentTarget);
+    closePicturePopup(e.currentTarget);
+  });
+})
