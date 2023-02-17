@@ -14,20 +14,32 @@ const cardNameInput = document.querySelector(".popup__form-field-card");
 const urlInput = document.querySelector(".popup__form-field-source");
 const newCardForm = document.querySelector(".popup__form_card");
 const pictureSection = document.querySelector("#popup__opened-picture");
-const buttonClosePictureSection = document.querySelector(".popup__close-button_image");
+const buttonClosePictureSection = document.querySelector(
+  ".popup__close-button_image"
+);
 const gallery = document.querySelector(".elements__gallery");
 const openedPicture = document.querySelector(".popup__picture");
 const openedPictureCaption = document.querySelector(".popup__picture-caption");
+const popups = document.querySelectorAll(".popup");
+const overlays = document.querySelectorAll(".popup__overlay");
+
+const closeByEscape = (e) => {
+  if (e.key === "Escape") {
+    closeNamePopup(e.target);
+    closeNewCardForm(e.target);
+    closePicturePopup(e.target);
+  }
+};
 
 function openPopup(popup) {
   popup.classList.add("popup_opened");
-  popup.classList.remove("popup_closed");
-};
+  document.addEventListener("keydown", closeByEscape);
+}
 
 function closePopup(popup) {
   popup.classList.remove("popup_opened");
-  popup.classList.add("popup_closed");
-};
+  document.removeEventListener("keydown", closeByEscape);
+}
 
 function openPicturePopup(name, link) {
   openedPicture.src = link;
@@ -42,6 +54,9 @@ function closePicturePopup() {
 
 function openNewCardForm() {
   openPopup(newCardPopup);
+  const buttonElement = document.querySelector(".popup__create-button");
+  buttonElement.setAttribute("disabled", true);
+  buttonElement.classList.add("popup__submit-button_inactive");
 }
 
 function closeNewCardForm() {
@@ -56,7 +71,6 @@ function openNamePopup() {
 
 function closeNamePopup() {
   closePopup(profileForm);
-  closePopup(newCardPopup);
 }
 
 function submitProfileForm(evt) {
@@ -89,7 +103,7 @@ function createCard(name, link) {
   galleryImage.src = link;
   galleryImage.alt = name;
   galleryElement.querySelector(".elements__card-name").textContent = name;
-  
+
   const likeButton = galleryElement.querySelector(".elements__like");
   likeButton.addEventListener("click", likeCard);
 
@@ -103,7 +117,7 @@ function createCard(name, link) {
   return galleryElement;
 }
 
-function addToDom (card) {
+function addToDom(card) {
   gallery.prepend(card);
 }
 
@@ -120,27 +134,20 @@ initialCards.forEach(function (item) {
   addToDom(createCard(item.name, item.link));
 });
 
+const closeButtons = document.querySelectorAll(".popup__close-button");
+
+closeButtons.forEach((button) => {
+  const popup = button.closest(".popup");
+  button.addEventListener("click", () => closePopup(popup));
+});
+
+overlays.forEach((overlay) => {
+  overlay.addEventListener("click", function (e) {
+    popups.forEach((popup) => closePopup(popup));
+  });
+});
+
 buttonEditProfile.addEventListener("click", openNamePopup);
 formSubmitProfile.addEventListener("submit", submitProfileForm);
-buttonCloseProfileForm.addEventListener("click", closeNamePopup);
 buttonAddNewCard.addEventListener("click", openNewCardForm);
-buttonCloseNewCard.addEventListener("click", closeNewCardForm);
 newCardForm.addEventListener("submit", createNewCard);
-buttonClosePictureSection.addEventListener("click", closePicturePopup);
-
-document.addEventListener('keydown', function (e) {
-  if(e.key === "Escape") {
-    closeNamePopup(e.target);
-    closeNewCardForm(e.target);
-    closePicturePopup(e.target);
-  };
-}); 
-
-const overlays = document.querySelectorAll('.popup__overlay');
-overlays.forEach((overlay) => {
-  overlay.addEventListener('click', function (e) {
-    closeNamePopup(e.currentTarget);
-    closeNewCardForm(e.currentTarget);
-    closePicturePopup(e.currentTarget);
-  });
-})
