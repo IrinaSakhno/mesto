@@ -23,13 +23,12 @@ const openedPictureCaption = document.querySelector(".popup__picture-caption");
 const popups = document.querySelectorAll(".popup");
 const overlays = document.querySelectorAll(".popup__overlay");
 
-const closeByEscape = (e) => {
-  if (e.key === "Escape") {
-    closeNamePopup(e.target);
-    closeNewCardForm(e.target);
-    closePicturePopup(e.target);
+function closeByEscape(evt) {
+  if (evt.key === 'Escape') {
+    const openedPopup = document.querySelector('.popup_opened');
+    closePopup(openedPopup);
   }
-};
+}
 
 function openPopup(popup) {
   popup.classList.add("popup_opened");
