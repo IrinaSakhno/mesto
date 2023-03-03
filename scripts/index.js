@@ -71,14 +71,18 @@ function closeByEscape(evt) {
   }
 }
 
-export function openPopup(popup) {
+function openPopup(popup) {
   popup.classList.add("popup_opened");
   document.addEventListener("keydown", closeByEscape);
 }
 
-export function closePopup(popup) {
+function closePopup(popup) {
   popup.classList.remove("popup_opened");
   document.removeEventListener("keydown", closeByEscape);
+  if (popup.querySelector(".popup__form_card")) {
+    cardNameInput.value = "";
+    urlInput.value = ""; 
+  };
 }
 
 function openNewCardForm() {
