@@ -79,13 +79,10 @@ function openPopup(popup) {
 function closePopup(popup) {
   popup.classList.remove("popup_opened");
   document.removeEventListener("keydown", closeByEscape);
-  if (popup.querySelector(".popup__form_card")) {
-    cardNameInput.value = "";
-    urlInput.value = ""; 
-  };
 }
 
 function openNewCardForm() {
+  newCardForm.reset();
   openPopup(newCardPopup);
   cardValidation.resetValidation();
 }
@@ -115,14 +112,13 @@ function submitProfileForm(evt) {
 function createCard(data) {
   const card = new Card(data, "#new-card", handleCardClick);
   const cardElement = card.createCard();
-  gallery.prepend(cardElement);
+  return cardElement;
 }
 
 function createNewCard(evt) {
   evt.preventDefault();
   const data = {name: cardNameInput.value, link: urlInput.value};
-  createCard(data);
-
+  gallery.prepend(createCard(data));
 
   closeNewCardForm();
   newCardForm.reset();
@@ -130,7 +126,7 @@ function createNewCard(evt) {
 
 initialCards.forEach(function (item) {
   const data = {name: item.name, link: item.link};
-  createCard(data);
+  gallery.prepend(createCard(data));
 });
 
 
