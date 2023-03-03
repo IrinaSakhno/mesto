@@ -52,10 +52,17 @@ const newCardForm = document.querySelector(".popup__form_card");
 const gallery = document.querySelector(".elements__gallery");
 const popups = document.querySelectorAll(".popup");
 const overlays = document.querySelectorAll(".popup__overlay");
-export const openedPicture = document.querySelector(".popup__picture");
-export const openedPictureCaption = document.querySelector(".popup__picture-caption");
-export const pictureSection = document.querySelector("#popup__opened-picture");
+const openedPicture = document.querySelector(".popup__picture");
+const openedPictureCaption = document.querySelector(".popup__picture-caption");
+const pictureSection = document.querySelector("#popup__opened-picture");
 
+
+function handleCardClick(name, link) {
+  openedPicture.src = link;
+  openedPicture.alt = name;
+  openedPictureCaption.textContent = name;
+  openPopup(pictureSection);
+}
 
 function closeByEscape(evt) {
   if (evt.key === 'Escape') {
@@ -76,9 +83,7 @@ export function closePopup(popup) {
 
 function openNewCardForm() {
   openPopup(newCardPopup);
-  const buttonElement = document.querySelector(".popup__create-button");
-  buttonElement.setAttribute("disabled", true);
-  buttonElement.classList.add("popup__submit-button_inactive");
+  cardValidation.resetValidation();
 }
 
 function closeNewCardForm() {
@@ -89,6 +94,7 @@ function openNamePopup() {
   openPopup(profileForm);
   nameInput.value = currentName.innerText;
   jobInput.value = currentOccupation.innerText;
+  profileValidation.resetValidation();
 }
 
 function closeNamePopup() {
@@ -102,15 +108,17 @@ function submitProfileForm(evt) {
   closeNamePopup();
 }
 
-function addToDom(card) {
-  gallery.prepend(card);
+function createCard(data) {
+  const card = new Card(data, "#new-card", handleCardClick);
+  const cardElement = card.createCard();
+  gallery.prepend(cardElement);
 }
 
 function createNewCard(evt) {
   evt.preventDefault();
   const data = {name: cardNameInput.value, link: urlInput.value};
-  const card = new Card(data, "#new-card");
-  addToDom(card.createCard());
+  createCard(data);
+
 
   closeNewCardForm();
   newCardForm.reset();
@@ -118,8 +126,7 @@ function createNewCard(evt) {
 
 initialCards.forEach(function (item) {
   const data = {name: item.name, link: item.link};
-  const card = new Card(data, "#new-card");
-  addToDom(card.createCard());
+  createCard(data);
 });
 
 
@@ -135,6 +142,7 @@ overlays.forEach((overlay) => {
     popups.forEach((popup) => closePopup(popup));
   });
 });
+
 
 buttonEditProfile.addEventListener("click", openNamePopup);
 formSubmitProfile.addEventListener("submit", submitProfileForm);
