@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- delete stylesheets: -->
     <link rel="stylesheet" href="./pages/index.css">
     <title>Mesto</title>
   </head>
@@ -122,11 +123,18 @@
         </div>
       </div>
     </div>
-    <script type="module" src="./scripts/index.js"></script>
-    <script type="module" src="./scripts/Card.js"></script>
-    <script type="module" src="./scripts/FormValidator.js"></script>
+    <!-- delete scripts: -->
+    <script type="module" src="./pages/index.js"></script>
+    <script type="module" src="./scripts/components/Card.js"></script>
+    <script type="module" src="./scripts/components/FormValidator.js"></script>
+    <script type="module" src="./scripts/components/Popup.js"></script>
+    <script type="module" src="./scripts/components/PopupWithForm.js"></script>
+    <script type="module" src="./scripts/components/PopupWithImage.js"></script>
+    <script type="module" src="./scripts/components/Section.js"></script>
+    <script type="module" src="./scripts/components/UserInfo.js"></script>
+
   </body>
-  <template id="new-card">
+  <template class= "elements__card-template" id="new-card">
     <li class="elements__item">
       <img src=" " alt="" class="elements__image link">
       <button class="elements__trash link" type="button"></button>
