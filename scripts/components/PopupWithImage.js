@@ -6,10 +6,6 @@ export class PopupWithImage extends Popup {
     }
 
     open() {
-        openedPicture.src = link;
-        openedPicture.alt = name;
-        openedPictureCaption.textContent = name;
-        this._popupSelector.classList.add("popup_opened");
-        document.addEventListener("keydown", super._handleEscClose);
+        super.open();
     }
 }

@@ -43,6 +43,7 @@ export const settings = {
   errorClass: "popup__input-error_active",
 };
 
+const openedPopup = document.querySelector('.popup_opened');
 const buttonEditProfile = document.querySelector(".profile__edit-button");
 const formSubmitProfile = document.querySelector(".popup__form");
 const nameInput = document.querySelector(".popup__form-field-name");
@@ -65,8 +66,11 @@ function handleCardClick(name, link) {
   openedPicture.src = link;
   openedPicture.alt = name;
   openedPictureCaption.textContent = name;
-  // openNamePopup(pictureSection);
+  openPopup(pictureSection);
 }
+
+const pictureOpened = new PopupWithImage(pictureSection);
+
 
 const formForNewCard = new PopupWithForm(newCardForm, (evt) => {
   evt.preventDefault();
@@ -82,8 +86,6 @@ const formForProfile = new PopupWithForm(formSubmitProfile, (evt) => {
   PopupWithForm.close();
 })
 
-// const popupWithAnImage = new PopupWithImage(pictureSection);
-// popupWithAnImage.open();
 
 // function closeByEscape(evt) {
 //   if (evt.key === 'Escape') {
@@ -104,31 +106,31 @@ const formForProfile = new PopupWithForm(formSubmitProfile, (evt) => {
 
 function openNewCardForm() {
   newCardForm.reset();
-  popup.open(newCardPopup);
+  openPopup(newCardPopup);
   cardValidation.resetValidation();
 }
 
-// function closeNewCardForm() {
-//   closePopup(newCardPopup);
-// }
+function closeNewCardForm() {
+  closePopup(newCardPopup);
+}
 
 function openNamePopup() {
-  popup.open(profileForm);
+  openPopup(profileForm);
   nameInput.value = currentName.innerText;
   jobInput.value = currentOccupation.innerText;
   profileValidation.resetValidation();
 }
 
-// function closeNamePopup() {
-//   closePopup(profileForm);
-// }
+function closeNamePopup() {
+  closePopup(profileForm);
+}
 
-// function submitProfileForm(evt) {
-//   evt.preventDefault();
-//   currentName.textContent = nameInput.value;
-//   currentOccupation.textContent = jobInput.value;
-//   closeNamePopup();
-// }
+function submitProfileForm(evt) {
+  evt.preventDefault();
+  currentName.textContent = nameInput.value;
+  currentOccupation.textContent = jobInput.value;
+  closeNamePopup();
+}
 
 function createCard(data) {
   const card = new Card(data, "#new-card", handleCardClick);
@@ -156,14 +158,14 @@ const cardList = new Section ({
 cardList.renderItems();
 
 
-// function createNewCard(evt) {
-  // evt.preventDefault();
-  // const data = {name: cardNameInput.value, link: urlInput.value};
-  // gallery.prepend(createCard(data));
+function createNewCard(evt) {
+  evt.preventDefault();
+  const data = {name: cardNameInput.value, link: urlInput.value};
+  gallery.prepend(createCard(data));
 
-  // closeNewCardForm();
-  // newCardForm.reset();
-// }
+  closeNewCardForm();
+  newCardForm.reset();
+}
 
 
 
@@ -183,8 +185,8 @@ cardList.renderItems();
 buttonEditProfile.addEventListener("click", openNamePopup);
 buttonAddNewCard.addEventListener("click", openNewCardForm);
 
-// newCardForm.addEventListener("submit", createNewCard);
-// formSubmitProfile.addEventListener("submit", submitProfileForm);
+newCardForm.addEventListener("submit", createNewCard);
+formSubmitProfile.addEventListener("submit", submitProfileForm);
 
 const profileValidation = new FormValidator(settings, document.querySelector(".popup__form_profile"));
 profileValidation.enableValidation();

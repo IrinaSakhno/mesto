@@ -15,7 +15,6 @@ export class Popup {
 
     _handleEscClose() {
         if (evt.key === 'Escape') {
-            const openedPopup = document.querySelector('.popup_opened');
             close(openedPopup);
           }
     }
