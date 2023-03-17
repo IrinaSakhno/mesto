@@ -24,13 +24,12 @@ export class Popup {
         closeButtons.forEach((button) => {
             const popup = button.closest(".popup");
             button.addEventListener("click", () => this.close(popup));
-          });
+        });
           
-          const overlays = document.querySelectorAll(".popup__overlay");
-          overlays.forEach((overlay) => {
-            overlay.addEventListener("click", function (e) {
-              popups.forEach((popup) => this.close(popup));
-            });
-          });
-    }
+        const overlays = document.querySelectorAll(".popup__overlay");
+        overlays.forEach((overlay) => {
+            const popup = overlay.closest(".popup");
+            overlay.addEventListener("click", () => this.close(popup));
+        });
+    };
 }

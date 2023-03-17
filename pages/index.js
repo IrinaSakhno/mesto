@@ -66,24 +66,21 @@ function handleCardClick(name, link) {
   openedPicture.src = link;
   openedPicture.alt = name;
   openedPictureCaption.textContent = name;
-  openPopup(pictureSection);
+  pictureOpened.open(name, link);
 }
 
 const pictureOpened = new PopupWithImage(pictureSection);
+pictureOpened.setEventListeners();
 
-
-const formForNewCard = new PopupWithForm(newCardForm, (evt) => {
-  evt.preventDefault();
+const formForNewCard = new PopupWithForm(newCardForm, () => {
   const data = {name: cardNameInput.value, link: urlInput.value};
   gallery.prepend(createCard(data));
-  PopupWithForm.close();
 })
 
-const formForProfile = new PopupWithForm(formSubmitProfile, (evt) => {
-  evt.preventDefault();
+const formForProfile = new PopupWithForm(formSubmitProfile, () => {
   currentName.textContent = nameInput.value;
   currentOccupation.textContent = jobInput.value;
-  PopupWithForm.close();
+
 })
 
 
@@ -125,12 +122,12 @@ function closeNamePopup() {
   closePopup(profileForm);
 }
 
-function submitProfileForm(evt) {
-  evt.preventDefault();
-  currentName.textContent = nameInput.value;
-  currentOccupation.textContent = jobInput.value;
-  closeNamePopup();
-}
+// function submitProfileForm(evt) {
+//   evt.preventDefault();
+//   currentName.textContent = nameInput.value;
+//   currentOccupation.textContent = jobInput.value;
+//   closeNamePopup();
+// }
 
 function createCard(data) {
   const card = new Card(data, "#new-card", handleCardClick);
@@ -186,7 +183,7 @@ buttonEditProfile.addEventListener("click", openNamePopup);
 buttonAddNewCard.addEventListener("click", openNewCardForm);
 
 newCardForm.addEventListener("submit", createNewCard);
-formSubmitProfile.addEventListener("submit", submitProfileForm);
+// formSubmitProfile.addEventListener("submit", submitProfileForm);
 
 const profileValidation = new FormValidator(settings, document.querySelector(".popup__form_profile"));
 profileValidation.enableValidation();
