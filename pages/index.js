@@ -72,17 +72,17 @@ function handleCardClick(name, link) {
 const pictureOpened = new PopupWithImage(pictureSection);
 pictureOpened.setEventListeners();
 
-const formForNewCard = new PopupWithForm(newCardForm, () => {
+const formForNewCard = new PopupWithForm(newCardPopup, () => {
   const data = {name: cardNameInput.value, link: urlInput.value};
   gallery.prepend(createCard(data));
-})
+});
+formForNewCard.setEventListeners();
 
-const formForProfile = new PopupWithForm(formSubmitProfile, () => {
+const formForProfile = new PopupWithForm(profileForm, () => {
   currentName.textContent = nameInput.value;
   currentOccupation.textContent = jobInput.value;
-
 })
-
+formForProfile.setEventListeners();
 
 // function closeByEscape(evt) {
 //   if (evt.key === 'Escape') {
@@ -103,7 +103,7 @@ const formForProfile = new PopupWithForm(formSubmitProfile, () => {
 
 function openNewCardForm() {
   newCardForm.reset();
-  openPopup(newCardPopup);
+  formForNewCard.open();
   cardValidation.resetValidation();
 }
 
@@ -112,7 +112,7 @@ function closeNewCardForm() {
 }
 
 function openNamePopup() {
-  openPopup(profileForm);
+  formForProfile.open();
   nameInput.value = currentName.innerText;
   jobInput.value = currentOccupation.innerText;
   profileValidation.resetValidation();
@@ -182,7 +182,7 @@ function createNewCard(evt) {
 buttonEditProfile.addEventListener("click", openNamePopup);
 buttonAddNewCard.addEventListener("click", openNewCardForm);
 
-newCardForm.addEventListener("submit", createNewCard);
+// newCardForm.addEventListener("submit", createNewCard);
 // formSubmitProfile.addEventListener("submit", submitProfileForm);
 
 const profileValidation = new FormValidator(settings, document.querySelector(".popup__form_profile"));
