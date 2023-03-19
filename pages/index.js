@@ -62,6 +62,8 @@ const openedPicture = document.querySelector(".popup__picture");
 const openedPictureCaption = document.querySelector(".popup__picture-caption");
 const pictureSection = document.querySelector("#popup__opened-picture");
 
+
+// оставляем
 function handleCardClick(name, link) {
   openedPicture.src = link;
   openedPicture.alt = name;
@@ -101,16 +103,19 @@ formForProfile.setEventListeners();
 //   document.removeEventListener("keydown", closeByEscape);
 // }
 
+
+// оставляем
 function openNewCardForm() {
   newCardForm.reset();
   formForNewCard.open();
   cardValidation.resetValidation();
 }
 
-function closeNewCardForm() {
-  closePopup(newCardPopup);
-}
+// function closeNewCardForm() {
+//   closePopup(newCardPopup);
+// }
 
+// оставляем
 function openNamePopup() {
   formForProfile.open();
   nameInput.value = currentName.innerText;
@@ -118,17 +123,21 @@ function openNamePopup() {
   profileValidation.resetValidation();
 }
 
-function closeNamePopup() {
-  closePopup(profileForm);
-}
 
-// function submitProfileForm(evt) {
-//   evt.preventDefault();
-//   currentName.textContent = nameInput.value;
-//   currentOccupation.textContent = jobInput.value;
-//   closeNamePopup();
+// function closeNamePopup() {
+//   closePopup(profileForm);
 // }
 
+const userInfoDisplay = new UserInfo (nameInput.value, jobInput.value);
+
+function submitProfileForm(evt) {
+  evt.preventDefault();
+  currentName.textContent = nameInput.value;
+  currentOccupation.textContent = jobInput.value;
+  closeNamePopup();
+}
+
+// оставляем
 function createCard(data) {
   const card = new Card(data, "#new-card", handleCardClick);
   const cardElement = card.createCard();
@@ -141,7 +150,7 @@ function createCard(data) {
 //   gallery.prepend(createCard(data));
 // });
 
-
+// оставляем
 const cardList = new Section ({
     items: initialCards,
     renderer: (initialCard) => {
@@ -151,18 +160,17 @@ const cardList = new Section ({
   },
   gallery
 );
-
 cardList.renderItems();
 
 
-function createNewCard(evt) {
-  evt.preventDefault();
-  const data = {name: cardNameInput.value, link: urlInput.value};
-  gallery.prepend(createCard(data));
+// function createNewCard(evt) {
+//   evt.preventDefault();
+//   const data = {name: cardNameInput.value, link: urlInput.value};
+//   gallery.prepend(createCard(data));
 
-  closeNewCardForm();
-  newCardForm.reset();
-}
+//   closeNewCardForm();
+//   newCardForm.reset();
+// }
 
 
 
@@ -178,13 +186,13 @@ function createNewCard(evt) {
 //   });
 // });
 
-
+// оставляем
 buttonEditProfile.addEventListener("click", openNamePopup);
 buttonAddNewCard.addEventListener("click", openNewCardForm);
 
 // newCardForm.addEventListener("submit", createNewCard);
 // formSubmitProfile.addEventListener("submit", submitProfileForm);
-
+// оставляем
 const profileValidation = new FormValidator(settings, document.querySelector(".popup__form_profile"));
 profileValidation.enableValidation();
 const cardValidation = new FormValidator(settings, document.querySelector(".popup__form_card"));
