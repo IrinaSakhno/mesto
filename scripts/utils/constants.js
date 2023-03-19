@@ -37,13 +37,8 @@ export const initialCards = [
   export const buttonEditProfile = document.querySelector(".profile__edit-button");
   export const nameInput = document.querySelector(".popup__form-field-name");
   export const jobInput = document.querySelector(".popup__form-field-occupation");
-  export const currentName = document.querySelector(".profile__name");
-  export const currentOccupation = document.querySelector(".profile__occupation");
   export const buttonAddNewCard = document.querySelector(".profile__add-button");
   export const cardNameInput = document.querySelector(".popup__form-field-card");
   export const urlInput = document.querySelector(".popup__form-field-source");
-  export const newCardForm = document.querySelector(".popup__form_card");
   export const gallery = document.querySelector(".elements__gallery");
-  export const openedPicture = document.querySelector(".popup__picture");
-  export const openedPictureCaption = document.querySelector(".popup__picture-caption");
 

@@ -1,10 +1,8 @@
 import './index.css';
 
 import { initialCards, settings, buttonEditProfile, 
-  nameInput, jobInput, currentName, currentOccupation, 
-  buttonAddNewCard, cardNameInput, urlInput, newCardForm, 
-  gallery, openedPicture, openedPictureCaption } 
-  from '../scripts/utils/constants.js';
+  nameInput, jobInput, buttonAddNewCard, cardNameInput, 
+  urlInput, gallery } from '../scripts/utils/constants.js';
 
 import { Card } from "../scripts/components/Card.js";
 import { FormValidator } from "../scripts/components/FormValidator.js";
@@ -14,12 +12,9 @@ import { PopupWithImage } from "../scripts/components/PopupWithImage.js";
 import { UserInfo } from "../scripts/components/UserInfo.js";
 
 
-const userInfoDisplay = new UserInfo ({currentName, currentOccupation});
+const userInfoDisplay = new UserInfo ({currentNameSelector: ".profile__name", currentOccupationSelector: ".profile__occupation"});
 
 function handleCardClick(name, link) {
-  openedPicture.src = link;
-  openedPicture.alt = name;
-  openedPictureCaption.textContent = name;
   pictureOpened.open(name, link);
 }
 

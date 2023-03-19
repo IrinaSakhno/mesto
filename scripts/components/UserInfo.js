@@ -1,7 +1,7 @@
 export class UserInfo {
-    constructor({currentName, currentOccupation}) {
-        this._userName = currentName;
-        this._userOccupation = currentOccupation;
+    constructor({currentNameSelector, currentOccupationSelector}) {
+        this._userName = document.querySelector(currentNameSelector);
+        this._userOccupation = document.querySelector(currentOccupationSelector);
     }
 
     getUserInfo() {
