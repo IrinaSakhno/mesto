@@ -68,16 +68,16 @@ function handleCardClick(name, link) {
   pictureOpened.open(name, link);
 }
 
-const pictureOpened = new PopupWithImage(pictureSection);
+const pictureOpened = new PopupWithImage("#popup__opened-picture");
 pictureOpened.setEventListeners();
 
-const formForNewCard = new PopupWithForm(newCardPopup, () => {
+const formForNewCard = new PopupWithForm("#popup__new-card", () => {
   const data = {name: cardNameInput.value, link: urlInput.value};
   gallery.prepend(createCard(data));
 });
 formForNewCard.setEventListeners();
 
-const formForProfile = new PopupWithForm(profileForm, ({name, occupation}) => {
+const formForProfile = new PopupWithForm("#popup__change-name", ({name, occupation}) => {
   userInfoDisplay.setUserInfo(name, occupation);
 })
 formForProfile.setEventListeners();

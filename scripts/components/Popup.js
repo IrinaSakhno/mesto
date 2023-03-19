@@ -1,15 +1,17 @@
 export class Popup {
     constructor(popupSelector) {
-        this._popupSelector = popupSelector;
+        this._popup = document.querySelector(popupSelector);
+        this._overlays = document.querySelectorAll(".popup__overlay");
+        this._closeButtons = document.querySelectorAll(".popup__close-button");
     }
 
     open() {
-        this._popupSelector.classList.add("popup_opened");
+        this._popup.classList.add("popup_opened");
         document.addEventListener("keydown", this._handleEscClose);
     }
 
     close() {
-        this._popupSelector.classList.remove("popup_opened");
+        this._popup.classList.remove("popup_opened");
         document.removeEventListener("keydown", this._handleEscClose);
     }
 
@@ -20,14 +22,12 @@ export class Popup {
     }
 
     setEventListeners() {
-        const closeButtons = document.querySelectorAll(".popup__close-button");
-        closeButtons.forEach((button) => {
+        this._closeButtons.forEach((button) => {
             const popup = button.closest(".popup");
             button.addEventListener("click", () => this.close(popup));
         });
           
-        const overlays = document.querySelectorAll(".popup__overlay");
-        overlays.forEach((overlay) => {
+        this._overlays.forEach((overlay) => {
             const popup = overlay.closest(".popup");
             overlay.addEventListener("click", () => this.close(popup));
         });

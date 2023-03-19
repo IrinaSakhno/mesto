@@ -18,6 +18,7 @@ module.exports = {
     compress: true,
     port: 8080
   },
+  devtool: "source-map",
   module: {
     rules: [{
         test: /\.js$/,
@@ -39,6 +40,11 @@ module.exports = {
           'postcss-loader'
         ]
       },
+      {
+        test: /\.js$/,
+        enforce: "pre",
+        use: ["source-map-loader"],
+      },
     ]
   },
   plugins: [
@@ -47,6 +53,5 @@ module.exports = {
     }),
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin(),
-
   ]
 }
