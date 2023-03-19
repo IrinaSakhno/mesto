@@ -21,9 +21,9 @@ function handleCardClick(name, link) {
 const pictureOpened = new PopupWithImage("#popup__opened-picture");
 pictureOpened.setEventListeners();
 
-const formForNewCard = new PopupWithForm("#popup__new-card", () => {
-  const data = {name: cardNameInput.value, link: urlInput.value};
-  gallery.prepend(createCard(data));
+const formForNewCard = new PopupWithForm("#popup__new-card", ({card, source}) => {
+  const data = {name: card, link: source};
+  cardList.addItem(createCard(data));
 });
 formForNewCard.setEventListeners();
 
