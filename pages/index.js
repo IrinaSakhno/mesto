@@ -62,6 +62,8 @@ const openedPicture = document.querySelector(".popup__picture");
 const openedPictureCaption = document.querySelector(".popup__picture-caption");
 const pictureSection = document.querySelector("#popup__opened-picture");
 
+const userInfoDisplay = new UserInfo ({currentName, currentOccupation});
+
 
 // оставляем
 function handleCardClick(name, link) {
@@ -80,9 +82,10 @@ const formForNewCard = new PopupWithForm(newCardPopup, () => {
 });
 formForNewCard.setEventListeners();
 
-const formForProfile = new PopupWithForm(profileForm, () => {
-  currentName.textContent = nameInput.value;
-  currentOccupation.textContent = jobInput.value;
+const formForProfile = new PopupWithForm(profileForm, ({name, occupation}) => {
+  // currentName.textContent = nameInput.value;
+  // currentOccupation.textContent = jobInput.value;
+  userInfoDisplay.setUserInfo(name, occupation);
 })
 formForProfile.setEventListeners();
 
@@ -118,8 +121,9 @@ function openNewCardForm() {
 // оставляем
 function openNamePopup() {
   formForProfile.open();
-  nameInput.value = currentName.innerText;
-  jobInput.value = currentOccupation.innerText;
+  const userInformation = userInfoDisplay.getUserInfo();
+  nameInput.value = userInformation.name.innerText;
+  jobInput.value = userInformation.job.innerText;
   profileValidation.resetValidation();
 }
 
@@ -128,7 +132,7 @@ function openNamePopup() {
 //   closePopup(profileForm);
 // }
 
-const userInfoDisplay = new UserInfo (nameInput.value, jobInput.value);
+
 
 function submitProfileForm(evt) {
   evt.preventDefault();

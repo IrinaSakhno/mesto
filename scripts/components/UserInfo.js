@@ -1,15 +1,16 @@
 export class UserInfo {
-    constructor({userName, userInformation}) {
-        this._userName = userName;
-        this._userInformation = userInformation;
+    constructor({currentName, currentOccupation}) {
+        this._userName = currentName;
+        this._userOccupation = currentOccupation;
     }
 
     getUserInfo() {
-
-        return  x;
+        const userInformation = {name: this._userName, job: this._userOccupation};
+        return userInformation;
     }
 
-    setUserInfo(x) {
-        
+    setUserInfo(nameInput, jobInput) {
+        this._userName.textContent = nameInput;
+        this._userOccupation.textContent = jobInput;
     }
 }
