@@ -27,6 +27,44 @@ const api = new Api({
   },
 });
 
+
+function init () {
+
+}
+
+api.getInitialCards().then((res) => {
+  
+  const cardList = new Section(
+    {
+      items: res,
+      renderer: (initialCard) => {
+        const data = { name: initialCard.name, link: initialCard.link };
+        cardList.addItem(createCard(data));
+      },
+    },
+    gallery
+  );
+  cardList.renderItems();
+
+  const formForNewCard = new PopupWithForm(
+    "#popup__new-card",
+    ({ card, source }) => {
+      api.addNewCard({name: card, link: source}).then((res) => {
+        const data = {name: res.name, link: res.link};
+        cardList.addItem(createCard(data))
+      })
+    }
+  );
+  formForNewCard.setEventListeners();
+
+  function openNewCardForm() {
+    formForNewCard.open();
+    cardValidation.resetValidation();
+  }
+  buttonAddNewCard.addEventListener("click", openNewCardForm);
+  
+});
+
 const userInfoDisplay = new UserInfo({
   currentNameSelector: ".profile__name",
   currentOccupationSelector: ".profile__occupation",
@@ -45,15 +83,7 @@ function handleCardClick(name, link) {
 const pictureOpened = new PopupWithImage("#popup__opened-picture");
 pictureOpened.setEventListeners();
 
-const formForNewCard = new PopupWithForm(
-  "#popup__new-card",
-  ({ card, source }) => {
-    // const data = { name: card, link: source };
-    // cardList.addItem(createCard(data));
-    cardList.addItem(createCard(api.addNewCard({name: card, link: source}).then((res) => {
-      const data = { name: res.name, link: res.link});
-    });
-formForNewCard.setEventListeners();
+
 
 const formForProfile = new PopupWithForm(
   "#popup__change-name",
@@ -64,12 +94,6 @@ const formForProfile = new PopupWithForm(
 );
 formForProfile.setEventListeners();
 
-
-
-function openNewCardForm() {
-  formForNewCard.open();
-  cardValidation.resetValidation();
-}
 
 function openNamePopup() {
   formForProfile.open();
@@ -85,25 +109,10 @@ function createCard(data) {
   return cardElement;
 }
 
-api.getInitialCards().then((res) => {
-  const cardList = new Section(
-    {
-      items: res,
-      renderer: (initialCard) => {
-        const data = { name: initialCard.name, link: initialCard.link };
-        cardList.addItem(createCard(data));
-      },
-    },
-    gallery
-  );
-  cardList.renderItems();
-  cardList.forEach((card) => {
-    card.querySelector('.elements__like-quantity').textContent = card.likes.length;
-  })
-});
+
 
 buttonEditProfile.addEventListener("click", openNamePopup);
-buttonAddNewCard.addEventListener("click", openNewCardForm);
+
 
 const profileValidation = new FormValidator(
   settings,
