@@ -29,13 +29,15 @@ const api = new Api({
 });
 
 
-// api.getProfile().then((res) => {
-
-// })
-
 const userInfoDisplay = new UserInfo({
   currentNameSelector: ".profile__name",
   currentOccupationSelector: ".profile__occupation",
+});
+
+api.getProfile().then((res) => {
+  userInfoDisplay.getUserInfo().name = res.name;
+  userInfoDisplay.getUserInfo().job = res.about;
+  document.querySelector('.profile__avatar').src = res.avatar;
 });
 
 function handleCardClick(name, link) {
