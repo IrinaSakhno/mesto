@@ -71,8 +71,8 @@ const userInfoDisplay = new UserInfo({
 });
 
 api.getProfile().then((res) => {
-  userInfoDisplay.getUserInfo().name = res.name;
-  userInfoDisplay.getUserInfo().job = res.about;
+  document.querySelector('.profile__name').textContent = res.name;
+  document.querySelector('.profile__occupation').textContent = res.about;
   document.querySelector(".profile__avatar").src = res.avatar;
 });
 
@@ -89,7 +89,8 @@ const formForProfile = new PopupWithForm(
   "#popup__change-name",
   ({ name, occupation }) => {
     userInfoDisplay.setUserInfo(name, occupation);
-    api.editProfile({name: name, about: occupation});
+    api.editProfile({name: name, about: occupation}).then((res) =>
+    console.log(res));
   }
 );
 formForProfile.setEventListeners();

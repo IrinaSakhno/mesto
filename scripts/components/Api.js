@@ -41,7 +41,6 @@ export class Api {
     } 
 
     editProfile({name, about}) {
-      console.log('name: ' + name  + 'and ' + 'about: ' + about)
       return fetch(`${this.baseUrl}/users/me`, {
         method: 'PATCH',
         headers: {
