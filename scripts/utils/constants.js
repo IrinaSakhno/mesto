@@ -39,6 +39,6 @@ export const initialCards = [
   export const jobInput = document.querySelector(".popup__form-field-occupation");
   export const buttonAddNewCard = document.querySelector(".profile__add-button");
   export const cardNameInput = document.querySelector(".popup__form-field-card");
-  export const urlInput = document.querySelector(".popup__form-field-source");
   export const gallery = document.querySelector(".elements__gallery");
+  export const urlInput = document.querySelector(".popup__form-field-source");
 
