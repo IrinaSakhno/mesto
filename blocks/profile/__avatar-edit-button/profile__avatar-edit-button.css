@@ -1,0 +1,16 @@
+.profile__avatar-edit-button {
+    opacity: 0;
+    position: absolute;
+    width: 26px;
+    height: 26px;
+    background-image: url(../../../images/edit-pen.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    cursor: pointer;
+    background-color: #000;
+    border: none;
+}
+
+.profile__avatar-edit-button:hover {
+    opacity: 1;
+}

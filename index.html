@@ -16,10 +16,13 @@
       <main class="main">
         <section class="profile">
           <div class="profile__about">
-            <img
+            <div class="profile__avatar-block">
+              <img
               src="<%=require('./images/avatar.jpg')%>"
               alt="Жак-Ив Кусто"
               class="profile__avatar">
+              <button class="profile__avatar-edit-button" type="button"></button>
+            </div>  
             <div class="profile__info">
               <div class="profile__description">
                 <h1 class="profile__name">Жак-Ив Кусто</h1>
@@ -40,6 +43,18 @@
       <footer class="footer">
         <p class="footer__copyright">&copy; 2023 Mesto Russia</p>
       </footer>
+      
+      <div class="popup" id="popup__delete-card">
+        <div class="popup__overlay"></div>
+        <div class="popup__container popup__delete-confirmation-container">
+          <button class="popup__close-button link" type="button"></button>
+          <p class="popup__title">Вы уверены?</p>
+          <button class="popup__submit-button popup__delete-confirmation-button link" type="submit">
+            Да
+          </button>
+        </div>
+      </div>
+
       <div class="popup" id="popup__change-name">
         <div class="popup__overlay"></div>
         <div class="popup__container">
@@ -128,7 +143,10 @@
       <button class="elements__trash link" type="button"></button>
       <div class="elements__card">
         <h2 class="elements__card-name"></h2>
-        <button class="elements__like link" type="button"></button>
+        <div class="elements__like-block">
+          <button class="elements__like link" type="button"></button>
+          <p class="elements__like-quantity">0</p>
+        </div>
       </div>
     </li>
   </template>

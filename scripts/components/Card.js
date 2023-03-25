@@ -17,7 +17,6 @@ export class Card {
     this._trashButton = this._galleryElement.querySelector(".elements__trash");
     this._handleCardClick = handleCardClick;
   }
-
   
   _likeCard(evt) {
     const eventTarget = evt.target;

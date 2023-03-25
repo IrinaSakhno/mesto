@@ -14,3 +14,8 @@
     margin: 0 auto;
   }
 }
+
+.profile__avatar:hover {
+  opacity: 0.2;
+  transition: opacity 0.1s ease;
+}
