@@ -11,7 +11,7 @@ export class Api {
         method: 'GET',
         headers: {
           authorization: this.apiToken,
-          contentType: this.contentType
+          "Content-Type": this.contentType
         }
       })
         .then(res => {
@@ -28,7 +28,7 @@ export class Api {
           method: 'GET',
           headers: {
             authorization: this.apiToken,
-            contentType: this.contentType
+            "Content-Type": this.contentType
           }
         })
           .then(res => {
@@ -40,13 +40,18 @@ export class Api {
           });
     } 
 
-    editProfile() {
+    editProfile({name, about}) {
+      console.log('name: ' + name  + 'and ' + 'about: ' + about)
       return fetch(`${this.baseUrl}/users/me`, {
         method: 'PATCH',
         headers: {
           authorization: this.apiToken,
-          contentType: this.contentType
-        }
+          "Content-Type": this.contentType
+        },
+        body: JSON.stringify({
+          name: name,
+          about: about
+        })
       })
         .then(res => {
           if (res.ok) {
@@ -57,8 +62,25 @@ export class Api {
         });
     }
 
-    addNewCard() {
-
+    addNewCard({name, link}) {
+      return fetch(`${this.baseUrl}/cards`, {
+        method: 'POST',
+        headers: {
+          authorization: this.apiToken,
+          "Content-Type": this.contentType
+        },
+        body: JSON.stringify({
+          name: name,
+          link: link
+        })
+      })
+        .then(res => {
+          if (res.ok) {
+            return res.json();
+          }
+    
+          return Promise.reject(`Ошибка: ${res.status}`);
+        });
     }
 
     getLikes() {

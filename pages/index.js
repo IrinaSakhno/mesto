@@ -1,7 +1,6 @@
 import "./index.css";
 
 import {
-  initialCards,
   settings,
   buttonEditProfile,
   nameInput,
@@ -28,7 +27,6 @@ const api = new Api({
   },
 });
 
-
 const userInfoDisplay = new UserInfo({
   currentNameSelector: ".profile__name",
   currentOccupationSelector: ".profile__occupation",
@@ -37,7 +35,7 @@ const userInfoDisplay = new UserInfo({
 api.getProfile().then((res) => {
   userInfoDisplay.getUserInfo().name = res.name;
   userInfoDisplay.getUserInfo().job = res.about;
-  document.querySelector('.profile__avatar').src = res.avatar;
+  document.querySelector(".profile__avatar").src = res.avatar;
 });
 
 function handleCardClick(name, link) {
@@ -50,19 +48,23 @@ pictureOpened.setEventListeners();
 const formForNewCard = new PopupWithForm(
   "#popup__new-card",
   ({ card, source }) => {
-    const data = { name: card, link: source };
-    cardList.addItem(createCard(data));
-  }
-);
+    // const data = { name: card, link: source };
+    // cardList.addItem(createCard(data));
+    cardList.addItem(createCard(api.addNewCard({name: card, link: source}).then((res) => {
+      const data = { name: res.name, link: res.link});
+    });
 formForNewCard.setEventListeners();
 
 const formForProfile = new PopupWithForm(
   "#popup__change-name",
   ({ name, occupation }) => {
     userInfoDisplay.setUserInfo(name, occupation);
+    api.editProfile({name: name, about: occupation});
   }
 );
 formForProfile.setEventListeners();
+
+
 
 function openNewCardForm() {
   formForNewCard.open();
@@ -95,6 +97,9 @@ api.getInitialCards().then((res) => {
     gallery
   );
   cardList.renderItems();
+  cardList.forEach((card) => {
+    card.querySelector('.elements__like-quantity').textContent = card.likes.length;
+  })
 });
 
 buttonEditProfile.addEventListener("click", openNamePopup);
