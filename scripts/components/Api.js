@@ -82,7 +82,11 @@ export class Api {
         });
     }
 
-    getLikes() {
+    addLike() {
+
+    }
+
+    removeLike() {
 
     }
     

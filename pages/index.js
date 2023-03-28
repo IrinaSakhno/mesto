@@ -36,21 +36,22 @@ api.getInitialCards().then((res) => {
   
   const cardList = new Section(
     {
-      items: res,
+      items: res.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt)),
       renderer: (initialCard) => {
-        const data = { name: initialCard.name, link: initialCard.link };
+        const data = { name: initialCard.name, link: initialCard.link, likes: initialCard.likes.length };
         cardList.addItem(createCard(data));
       },
     },
     gallery
   );
   cardList.renderItems();
+  console.log(res);
 
   const formForNewCard = new PopupWithForm(
     "#popup__new-card",
     ({ card, source }) => {
       api.addNewCard({name: card, link: source}).then((res) => {
-        const data = {name: res.name, link: res.link};
+        const data = {name: res.name, link: res.link, likes: res.likes.length};
         cardList.addItem(createCard(data))
       })
     }

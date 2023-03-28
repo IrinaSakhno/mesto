@@ -16,6 +16,8 @@ export class Card {
     this._likeButton = this._galleryElement.querySelector(".elements__like");
     this._trashButton = this._galleryElement.querySelector(".elements__trash");
     this._handleCardClick = handleCardClick;
+    this._likeQuantity = this._galleryElement.querySelector(".elements__like-quantity");
+    this._likes = data.likes;
   }
   
   _likeCard(evt) {
@@ -32,6 +34,14 @@ export class Card {
     deletingItem.remove();
   }
   
+  // _confirmCardRemoving(evt) {
+  //   const confirmationOFDeleting = document.querySelector('.popup__delete-card');
+  //   confirmationOFDeleting.classList.add("popup_opened");
+  //   const button = confirmationOFDeleting.querySelector('.popup__delete-confirmation-button');
+  //   button.addEventListener("click", () => {console.log('zaebalo vsyo!')});
+
+  // }
+
   _setEventListeners() {
     this._likeButton.addEventListener("click", this._likeCard);
     this._trashButton.addEventListener("click", this._removeCard);
@@ -44,7 +54,7 @@ export class Card {
     this._galleryImage.src = this._link;
     this._galleryImage.alt = this._name;
     this._galleryElement.querySelector(".elements__card-name").textContent = this._name;
-  
+    this._likeQuantity.textContent = this._likes;
     this._setEventListeners();
   
     return this._galleryElement;
