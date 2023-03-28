@@ -1,4 +1,4 @@
-
+import { PopupWithConfirmation } from "./PopupWithConfirmation.js"
 export class Card {
   _name = "";
   _link = "";
@@ -44,18 +44,19 @@ export class Card {
   }
   
   _confirmCardRemoving(evt, api) {
-    const confirmationOFDeleting = document.querySelector('.popup__delete-card');
-    confirmationOFDeleting.classList.add("popup_opened");
-    const button = confirmationOFDeleting.querySelector('.popup__delete-confirmation-button');
+    const confirmationOFDeleting = new PopupWithConfirmation('.popup__delete-card');
+    confirmationOFDeleting.open();
+    confirmationOFDeleting.setEventListeners();
+    const button = document.querySelector('.popup__delete-confirmation-button');
     button.addEventListener("click", () => {
       this._removeCard(evt, api);
-      confirmationOFDeleting.classList.remove("popup_opened")});
+      confirmationOFDeleting.close();
+    });
   }
 
   _setEventListeners(api) {
     this._likeButton.addEventListener("click", (evt) => { this._likeCard(evt, api) });
     this._trashButton.addEventListener("click", (evt) => {this._confirmCardRemoving(evt, api)});
-    // this._trashButton.addEventListener("click", (evt) => {this._removeCard(evt, api)});
     this._galleryImage.addEventListener("click", () => {
       this._handleCardClick(this._name, this._link);
     });
