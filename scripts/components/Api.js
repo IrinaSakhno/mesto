@@ -82,12 +82,38 @@ export class Api {
         });
     }
 
-    addLike() {
-
+    putLike(cardId) {
+      return fetch(`${this.baseUrl}/cards/${cardId}/likes `, {
+        method: 'PUT',
+        headers: {
+          authorization: this.apiToken,
+          "Content-Type": this.contentType
+        }
+      })
+        .then(res => {
+          if (res.ok) {
+            return res.json();
+          }
+    
+          return Promise.reject(`Ошибка: ${res.status}`);
+        });
     }
 
-    removeLike() {
-
+    removeLike(cardId) {
+      return fetch(`${this.baseUrl}/cards/${cardId}/likes `, {
+        method: 'DELETE',
+        headers: {
+          authorization: this.apiToken,
+          "Content-Type": this.contentType
+        }
+      })
+        .then(res => {
+          if (res.ok) {
+            return res.json();
+          }
+    
+          return Promise.reject(`Ошибка: ${res.status}`);
+        });
     }
     
     deleteCard() {

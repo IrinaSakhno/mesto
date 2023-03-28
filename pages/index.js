@@ -32,50 +32,65 @@ function init () {
 
 }
 
-api.getInitialCards().then((res) => {
+api.getInitialCards()
+  .then((res) => {
   
-  const cardList = new Section(
-    {
-      items: res.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt)),
-      renderer: (initialCard) => {
-        const data = { name: initialCard.name, link: initialCard.link, likes: initialCard.likes.length };
-        cardList.addItem(createCard(data));
+    const cardList = new Section(
+      {
+        items: res.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt)),
+        renderer: (initialCard) => {
+          const data = { name: initialCard.name, link: initialCard.link, likes: initialCard.likes, cardId: initialCard._id};
+          cardList.addItem(createCard(data, api));
+        },
       },
-    },
-    gallery
-  );
-  cardList.renderItems();
-  console.log(res);
+      gallery
+    );
+    cardList.renderItems();
+    console.log(res);
 
-  const formForNewCard = new PopupWithForm(
-    "#popup__new-card",
-    ({ card, source }) => {
-      api.addNewCard({name: card, link: source}).then((res) => {
-        const data = {name: res.name, link: res.link, likes: res.likes.length};
-        cardList.addItem(createCard(data))
-      })
+    const formForNewCard = new PopupWithForm(
+      "#popup__new-card",
+      ({ card, source }) => {
+        api.addNewCard({name: card, link: source})
+          .then((res) => {
+            const data = {name: res.name, link: res.link, likes: res.likes, cardId: res._id};
+            cardList.addItem(createCard(data, api))
+          })
+
+          .catch((err) => {
+            console.log(err);
+          })
+      }
+    );
+    formForNewCard.setEventListeners();
+
+    function openNewCardForm() {
+      formForNewCard.open();
+      cardValidation.resetValidation();
     }
-  );
-  formForNewCard.setEventListeners();
+    buttonAddNewCard.addEventListener("click", openNewCardForm);
+    
+  })
 
-  function openNewCardForm() {
-    formForNewCard.open();
-    cardValidation.resetValidation();
-  }
-  buttonAddNewCard.addEventListener("click", openNewCardForm);
-  
-});
+  .catch((err) => {
+    console.log(err);
+  });
 
 const userInfoDisplay = new UserInfo({
   currentNameSelector: ".profile__name",
   currentOccupationSelector: ".profile__occupation",
 });
 
-api.getProfile().then((res) => {
-  document.querySelector('.profile__name').textContent = res.name;
-  document.querySelector('.profile__occupation').textContent = res.about;
-  document.querySelector(".profile__avatar").src = res.avatar;
-});
+api.getProfile()
+  .then((res) => {
+    document.querySelector('.profile__name').textContent = res.name;
+    document.querySelector('.profile__occupation').textContent = res.about;
+    document.querySelector(".profile__avatar").src = res.avatar;
+  })
+
+  .catch((err) => {
+    console.log(err);
+  });
 
 function handleCardClick(name, link) {
   pictureOpened.open(name, link);
@@ -105,9 +120,9 @@ function openNamePopup() {
   profileValidation.resetValidation();
 }
 
-function createCard(data) {
+function createCard(data, api) {
   const card = new Card(data, "#new-card", handleCardClick);
-  const cardElement = card.createCard();
+  const cardElement = card.createCard(api);
   return cardElement;
 }
 
