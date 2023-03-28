@@ -39,7 +39,7 @@ api.getInitialCards()
       {
         items: res.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt)),
         renderer: (initialCard) => {
-          const data = { name: initialCard.name, link: initialCard.link, likes: initialCard.likes, cardId: initialCard._id};
+          const data = { name: initialCard.name, link: initialCard.link, likes: initialCard.likes, cardId: initialCard._id, ownerId: initialCard.owner._id};
           cardList.addItem(createCard(data, api));
         },
       },
@@ -53,7 +53,7 @@ api.getInitialCards()
       ({ card, source }) => {
         api.addNewCard({name: card, link: source})
           .then((res) => {
-            const data = {name: res.name, link: res.link, likes: res.likes, cardId: res._id};
+            const data = {name: res.name, link: res.link, likes: res.likes, cardId: res._id, ownerId: res.owner._id};
             cardList.addItem(createCard(data, api))
           })
 

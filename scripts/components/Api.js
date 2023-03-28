@@ -83,7 +83,7 @@ export class Api {
     }
 
     putLike(cardId) {
-      return fetch(`${this.baseUrl}/cards/${cardId}/likes `, {
+      return fetch(`${this.baseUrl}/cards/${cardId}/likes`, {
         method: 'PUT',
         headers: {
           authorization: this.apiToken,
@@ -100,7 +100,7 @@ export class Api {
     }
 
     removeLike(cardId) {
-      return fetch(`${this.baseUrl}/cards/${cardId}/likes `, {
+      return fetch(`${this.baseUrl}/cards/${cardId}/likes`, {
         method: 'DELETE',
         headers: {
           authorization: this.apiToken,
@@ -116,8 +116,21 @@ export class Api {
         });
     }
     
-    deleteCard() {
-
+    deleteCard(cardId) {
+      return fetch(`${this.baseUrl}/cards/${cardId}`, {
+        method: 'DELETE',
+        headers: {
+          authorization: this.apiToken,
+          "Content-Type": this.contentType
+        }
+      })
+        .then(res => {
+          if (res.ok) {
+            return res.json();
+          }
+    
+          return Promise.reject(`Ошибка: ${res.status}`);
+        });
     }
 
     like() {

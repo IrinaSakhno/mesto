@@ -19,6 +19,8 @@ export class Card {
     this._likeQuantity = this._galleryElement.querySelector(".elements__like-quantity");
     this._likes = data.likes;
     this._cardId = data.cardId;
+    this._ownerId = data.ownerId;
+    this._myId = 'c61cf0854b6c5e975ca1e6cc';
   }
   
   _likeCard(evt, api) {
@@ -35,22 +37,25 @@ export class Card {
     
   }
   
-  _removeCard(evt) {
+  _removeCard(evt, api) {
     const deletingItem = evt.target.closest(".elements__item");
     deletingItem.remove();
+    api.deleteCard(this._cardId);
   }
   
-  // _confirmCardRemoving(evt) {
-  //   const confirmationOFDeleting = document.querySelector('.popup__delete-card');
-  //   confirmationOFDeleting.classList.add("popup_opened");
-  //   const button = confirmationOFDeleting.querySelector('.popup__delete-confirmation-button');
-  //   button.addEventListener("click", () => {console.log('zaebalo vsyo!')});
-
-  // }
+  _confirmCardRemoving(evt, api) {
+    const confirmationOFDeleting = document.querySelector('.popup__delete-card');
+    confirmationOFDeleting.classList.add("popup_opened");
+    const button = confirmationOFDeleting.querySelector('.popup__delete-confirmation-button');
+    button.addEventListener("click", () => {
+      this._removeCard(evt, api);
+      confirmationOFDeleting.classList.remove("popup_opened")});
+  }
 
   _setEventListeners(api) {
     this._likeButton.addEventListener("click", (evt) => { this._likeCard(evt, api) });
-    this._trashButton.addEventListener("click", this._removeCard);
+    this._trashButton.addEventListener("click", (evt) => {this._confirmCardRemoving(evt, api)});
+    // this._trashButton.addEventListener("click", (evt) => {this._removeCard(evt, api)});
     this._galleryImage.addEventListener("click", () => {
       this._handleCardClick(this._name, this._link);
     });
@@ -61,11 +66,14 @@ export class Card {
     this._galleryImage.alt = this._name;
     this._galleryElement.querySelector(".elements__card-name").textContent = this._name;
     this._likeQuantity.textContent = this._likes.length;
-    if (this._likes.find(x => x._id === 'c61cf0854b6c5e975ca1e6cc')) {
+    if (this._likes.find(x => x._id === this._myId)) {
       this._likeButton.classList.add("elements__like_active");
     } else {
       this._likeButton.classList.remove("elements__like_active");
     };
+    if (this._ownerId !== this._myId) {
+      this._trashButton.remove();
+    }
     this._setEventListeners(api);
   
     return this._galleryElement;
