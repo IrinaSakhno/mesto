@@ -6,9 +6,8 @@ import {
   nameInput,
   jobInput,
   buttonAddNewCard,
-  cardNameInput,
-  urlInput,
   gallery,
+  editButtonAvatar
 } from "../scripts/utils/constants.js";
 
 import { Card } from "../scripts/components/Card.js";
@@ -26,8 +25,6 @@ const api = new Api({
     contentType: "application/json",
   },
 });
-
-function init() {}
 
 api
   .getInitialCards()
@@ -50,6 +47,7 @@ api
       },
       gallery
     );
+    
     cardList.renderItems();
     console.log(res);
 
@@ -163,9 +161,8 @@ const formForNewAvatar = new PopupWithForm(
   }
 );
 formForNewAvatar.setEventListeners();
-const editButtonAvatar = document.querySelector(".profile__avatar-edit-button");
-editButtonAvatar.addEventListener("click", openAvatarPopup);
 
+editButtonAvatar.addEventListener("click", openAvatarPopup);
 buttonEditProfile.addEventListener("click", openNamePopup);
 
 const profileValidation = new FormValidator(
@@ -173,11 +170,13 @@ const profileValidation = new FormValidator(
   document.querySelector(".popup__form_profile")
 );
 profileValidation.enableValidation();
+
 const cardValidation = new FormValidator(
   settings,
   document.querySelector(".popup__form_card")
 );
 cardValidation.enableValidation();
+
 const avatarValidation = new FormValidator(
   settings,
   document.querySelector(".popup__form_avatar")
