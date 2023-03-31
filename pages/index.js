@@ -49,7 +49,6 @@ api
     );
     
     cardList.renderItems();
-    console.log(res);
 
     const formForNewCard = new PopupWithForm(
       "#popup__new-card",

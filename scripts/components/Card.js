@@ -44,7 +44,7 @@ export class Card {
   }
   
   _confirmCardRemoving(evt, api) {
-    const confirmationOFDeleting = new PopupWithConfirmation('.popup__delete-card');
+    const confirmationOFDeleting = new PopupWithConfirmation('#popup__delete-card');
     confirmationOFDeleting.open();
     confirmationOFDeleting.setEventListeners();
     const button = document.querySelector('.popup__delete-confirmation-button');
