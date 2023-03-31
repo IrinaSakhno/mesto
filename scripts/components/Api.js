@@ -133,12 +133,24 @@ export class Api {
         });
     }
 
-    like() {
-
-    }
-
-    changeAvatar() {
-
+    changeAvatar(avatar) {
+      return fetch(`${this.baseUrl}/users/me/avatar`, {
+        method: 'PATCH',
+        headers: {
+          authorization: this.apiToken,
+          "Content-Type": this.contentType
+        },
+        body: JSON.stringify({
+          avatar: avatar,
+        })
+      })
+        .then(res => {
+          if (res.ok) {
+            return res.json();
+          }
+    
+          return Promise.reject(`Ошибка: ${res.status}`);
+        });
     }
   
     

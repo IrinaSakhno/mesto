@@ -27,19 +27,24 @@ const api = new Api({
   },
 });
 
+function init() {}
 
-function init () {
-
-}
-
-api.getInitialCards()
+api
+  .getInitialCards()
   .then((res) => {
-  
     const cardList = new Section(
       {
-        items: res.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt)),
+        items: res.sort(
+          (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
+        ),
         renderer: (initialCard) => {
-          const data = { name: initialCard.name, link: initialCard.link, likes: initialCard.likes, cardId: initialCard._id, ownerId: initialCard.owner._id};
+          const data = {
+            name: initialCard.name,
+            link: initialCard.link,
+            likes: initialCard.likes,
+            cardId: initialCard._id,
+            ownerId: initialCard.owner._id,
+          };
           cardList.addItem(createCard(data, api));
         },
       },
@@ -51,15 +56,27 @@ api.getInitialCards()
     const formForNewCard = new PopupWithForm(
       "#popup__new-card",
       ({ card, source }) => {
-        api.addNewCard({name: card, link: source})
+        formForNewCard.renderLoading(true);
+        api
+          .addNewCard({ name: card, link: source })
           .then((res) => {
-            const data = {name: res.name, link: res.link, likes: res.likes, cardId: res._id, ownerId: res.owner._id};
-            cardList.addItem(createCard(data, api))
+            const data = {
+              name: res.name,
+              link: res.link,
+              likes: res.likes,
+              cardId: res._id,
+              ownerId: res.owner._id,
+            };
+            cardList.addItem(createCard(data, api));
           })
 
           .catch((err) => {
             console.log(err);
           })
+          .finally(() => {
+            formForNewCard.renderLoading(false);
+            formForNewCard.close();
+          });
       }
     );
     formForNewCard.setEventListeners();
@@ -69,7 +86,6 @@ api.getInitialCards()
       cardValidation.resetValidation();
     }
     buttonAddNewCard.addEventListener("click", openNewCardForm);
-    
   })
 
   .catch((err) => {
@@ -81,10 +97,11 @@ const userInfoDisplay = new UserInfo({
   currentOccupationSelector: ".profile__occupation",
 });
 
-api.getProfile()
+api
+  .getProfile()
   .then((res) => {
-    document.querySelector('.profile__name').textContent = res.name;
-    document.querySelector('.profile__occupation').textContent = res.about;
+    document.querySelector(".profile__name").textContent = res.name;
+    document.querySelector(".profile__occupation").textContent = res.about;
     document.querySelector(".profile__avatar").src = res.avatar;
   })
 
@@ -99,18 +116,21 @@ function handleCardClick(name, link) {
 const pictureOpened = new PopupWithImage("#popup__opened-picture");
 pictureOpened.setEventListeners();
 
-
-
 const formForProfile = new PopupWithForm(
   "#popup__change-name",
   ({ name, occupation }) => {
     userInfoDisplay.setUserInfo(name, occupation);
-    api.editProfile({name: name, about: occupation}).then((res) =>
-    console.log(res));
+    formForProfile.renderLoading(true);
+    api
+      .editProfile({ name: name, about: occupation })
+      .then((res) => console.log(res))
+      .finally(() => {
+        formForProfile.renderLoading(false);
+        formForProfile.close();
+      });
   }
 );
 formForProfile.setEventListeners();
-
 
 function openNamePopup() {
   formForProfile.open();
@@ -126,10 +146,27 @@ function createCard(data, api) {
   return cardElement;
 }
 
+function openAvatarPopup() {
+  formForNewAvatar.open();
+  avatarValidation.resetValidation();
+}
 
+const formForNewAvatar = new PopupWithForm(
+  "#popup__new-avatar",
+  ({ source }) => {
+    document.querySelector(".profile__avatar").src = source;
+    formForNewAvatar.renderLoading(true);
+    api.changeAvatar(source).finally(() => {
+      formForNewAvatar.renderLoading(false);
+      formForNewAvatar.close();
+    });
+  }
+);
+formForNewAvatar.setEventListeners();
+const editButtonAvatar = document.querySelector(".profile__avatar-edit-button");
+editButtonAvatar.addEventListener("click", openAvatarPopup);
 
 buttonEditProfile.addEventListener("click", openNamePopup);
-
 
 const profileValidation = new FormValidator(
   settings,
@@ -141,3 +178,8 @@ const cardValidation = new FormValidator(
   document.querySelector(".popup__form_card")
 );
 cardValidation.enableValidation();
+const avatarValidation = new FormValidator(
+  settings,
+  document.querySelector(".popup__form_avatar")
+);
+avatarValidation.enableValidation();
