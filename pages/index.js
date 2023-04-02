@@ -8,6 +8,7 @@ import {
   buttonAddNewCard,
   gallery,
   editButtonAvatar,
+  deleteConfirmationButton
 } from "../scripts/utils/constants.js";
 
 import { Card } from "../scripts/components/Card.js";
@@ -17,6 +18,8 @@ import { PopupWithForm } from "../scripts/components/PopupWithForm.js";
 import { PopupWithImage } from "../scripts/components/PopupWithImage.js";
 import { UserInfo } from "../scripts/components/UserInfo.js";
 import { Api } from "../scripts/components/Api";
+import { PopupWithConfirmation } from "../scripts/components/PopupWithConfirmation.js";
+export const confirmationOFDeleting = new PopupWithConfirmation('#popup__delete-card'); 
 
 const api = new Api({
   baseUrl: "https://mesto.nomoreparties.co/v1/cohort-62",
@@ -25,7 +28,6 @@ const api = new Api({
     contentType: "application/json",
   },
 });
-
 
 const cardList = new Section(
   {
@@ -133,12 +135,21 @@ function openNamePopup() {
   profileValidation.resetValidation();
 }
 
+function putLike(cardId) {
+  return api.putLike(cardId);
+}
+
+function removeLike(cardId) {
+  return api.removeLike(cardId);
+}
+
 function createCard(data) {
   const card = new Card(
     data,
     "#new-card",
     handleCardClick,
-    userInfoDisplay.getUserId()
+    userInfoDisplay.getUserId(), 
+    putLike, removeLike
   );
   const cardElement = card.createCard();
   return cardElement;

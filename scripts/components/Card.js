@@ -1,10 +1,11 @@
-import { PopupWithConfirmation } from "./PopupWithConfirmation.js"
+
+import { confirmationOFDeleting } from "../../pages/index.js"
 export class Card {
   _name = "";
   _link = "";
   _templateSelector = "";
   
-  constructor (data, templateSelector, handleCardClick, userId) {
+  constructor (data, templateSelector, handleCardClick, userId, putLike, removeLike) {
     this._name = data.name;
     this._link = data.link;
     this._templateSelector = templateSelector;
@@ -20,25 +21,28 @@ export class Card {
     this._likes = data.likes;
     this._cardId = data.cardId;
     this._ownerId = data.ownerId;
-    // this._myId = 'c61cf0854b6c5e975ca1e6cc';
     this._myId = userId;
+    this._putLike = putLike;
+    this._removeLike = removeLike;
   }
   
-  _likeCard(evt, api) {
+  _likeCard(evt) {
     const eventTarget = evt.target;
     if (eventTarget.classList.contains("elements__like_active")) {
-      api.removeLike(this._cardId)
+      this._removeLike(this._cardId)
         .then((res) => {
           eventTarget.classList.remove("elements__like_active");
-          this._likeQuantity.textContent=res.likes.length})
+          this._likeQuantity.textContent = res.likes.length;
+        })
         .catch((err) => {
           console.log(err);
         });
     } else {
-      api.putLike(this._cardId)
+      this._putLike(this._cardId)
       .then((res) => {
         eventTarget.classList.add("elements__like_active");
-        this._likeQuantity.textContent=res.likes.length})
+        this._likeQuantity.textContent = res.likes.length;
+      })
       .catch((err) => {
         console.log(err);
       });
@@ -47,25 +51,25 @@ export class Card {
   }
   
   _removeCard(evt, api) {
-    const deletingItem = evt.target.closest(".elements__item");
-    deletingItem.remove();
+    // const deletingItem = evt.target.closest(".elements__item");
+    this._galleryElement.remove();
+    this._galleryElement = null;
     api.deleteCard(this._cardId);
   }
   
   _confirmCardRemoving(evt, api) {
-    const confirmationOFDeleting = new PopupWithConfirmation('#popup__delete-card');
     confirmationOFDeleting.open();
     confirmationOFDeleting.setEventListeners();
-    const button = document.querySelector('.popup__delete-confirmation-button');
-    button.addEventListener("click", () => {
+    const buttonDeletingCard = document.querySelector('.popup__delete-confirmation-button');
+    buttonDeletingCard.addEventListener("click", () => {
       this._removeCard(evt, api);
       confirmationOFDeleting.close();
     });
   }
 
   _setEventListeners(api) {
-    this._likeButton.addEventListener("click", (evt) => { this._likeCard(evt, api) });
-    this._trashButton.addEventListener("click", (evt) => {this._confirmCardRemoving(evt, api)});
+    this._likeButton.addEventListener("click", (evt) => { this._likeCard(evt) });
+    this._trashButton.addEventListener("click", (evt) => {this._confirmCardRemoving(evt)});
     this._galleryImage.addEventListener("click", () => {
       this._handleCardClick(this._name, this._link);
     });

@@ -13,4 +13,5 @@
   export const buttonAddNewCard = document.querySelector(".profile__add-button");
   export const gallery = document.querySelector(".elements__gallery");
   export const editButtonAvatar = document.querySelector(".profile__avatar-edit-button");
+  export const deleteConfirmationButton = document.querySelector('.popup__delete-confirmation-button'); 
 
