@@ -30,10 +30,16 @@ export class Card {
       eventTarget.classList.remove("elements__like_active");
       api.removeLike(this._cardId)
         .then((res) => {this._likeQuantity.textContent=res.likes.length})
+        .catch((err) => {
+          console.log(err);
+        });
     } else {
       eventTarget.classList.add("elements__like_active");
       api.putLike(this._cardId)
       .then((res) => {this._likeQuantity.textContent=res.likes.length})
+      .catch((err) => {
+        console.log(err);
+      });
     }
     
   }

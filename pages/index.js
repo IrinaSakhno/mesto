@@ -122,6 +122,9 @@ const formForProfile = new PopupWithForm(
     api
       .editProfile({ name: name, about: occupation })
       .then((res) => console.log(res))
+      .catch((err) => {
+        console.log(err);
+      })
       .finally(() => {
         formForProfile.renderLoading(false);
         formForProfile.close();
