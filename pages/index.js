@@ -7,7 +7,7 @@ import {
   jobInput,
   buttonAddNewCard,
   gallery,
-  editButtonAvatar
+  editButtonAvatar,
 } from "../scripts/utils/constants.js";
 
 import { Card } from "../scripts/components/Card.js";
@@ -26,89 +26,79 @@ const api = new Api({
   },
 });
 
-api
-  .getInitialCards()
-  .then((res) => {
-    const cardList = new Section(
-      {
-        items: res.sort(
-          (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
-        ),
-        renderer: (initialCard) => {
-          const data = {
-            name: initialCard.name,
-            link: initialCard.link,
-            likes: initialCard.likes,
-            cardId: initialCard._id,
-            ownerId: initialCard.owner._id,
-          };
-          cardList.addItem(createCard(data, api));
-        },
-      },
-      gallery
-    );
-    
-    cardList.renderItems();
 
-    const formForNewCard = new PopupWithForm(
-      "#popup__new-card",
-      ({ card, source }) => {
-        formForNewCard.renderLoading(true);
-        api
-          .addNewCard({ name: card, link: source })
-          .then((res) => {
-            const data = {
-              name: res.name,
-              link: res.link,
-              likes: res.likes,
-              cardId: res._id,
-              ownerId: res.owner._id,
-            };
-            cardList.addItem(createCard(data, api));
-          })
+const cardList = new Section(
+  {
+    renderer: (initialCard) => {
+      const data = {
+        name: initialCard.name,
+        link: initialCard.link,
+        likes: initialCard.likes,
+        cardId: initialCard._id,
+        ownerId: initialCard.owner._id,
+      };
+      cardList.addItem(createCard(data));
+    },
+  },
+  gallery
+);
 
-          .catch((err) => {
-            console.log(err);
-          })
-          .finally(() => {
-            formForNewCard.renderLoading(false);
-            formForNewCard.close();
-          });
-      }
-    );
-    formForNewCard.setEventListeners();
 
-    function openNewCardForm() {
-      formForNewCard.open();
-      cardValidation.resetValidation();
-    }
-    buttonAddNewCard.addEventListener("click", openNewCardForm);
+Promise.all([api.getProfile(), api.getInitialCards()])
+  .then(([profile, cards]) => {
+    userInfoDisplay.setUserInfo(profile.name, profile.about);
+    userInfoDisplay.setUserAvatar(profile.avatar);
+    userInfoDisplay.setUserId(profile._id);
+
+    cardList.renderItems(cards.reverse());
   })
-
   .catch((err) => {
     console.log(err);
   });
 
+
+  const formForNewCard = new PopupWithForm(
+    "#popup__new-card",
+    ({ card, source }) => {
+      formForNewCard.renderLoading(true);
+      api
+        .addNewCard({ name: card, link: source })
+        .then((res) => {
+          const data = {
+            name: res.name,
+            link: res.link,
+            likes: res.likes,
+            cardId: res._id,
+            ownerId: res.owner._id,
+          };
+          cardList.addItem(createCard(data));
+          formForNewCard.close();
+        })
+
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => {
+          formForNewCard.renderLoading(false);
+        });
+    }
+  );
+  formForNewCard.setEventListeners();
+
+  function openNewCardForm() {
+    formForNewCard.open();
+    cardValidation.resetValidation();
+  }
+  buttonAddNewCard.addEventListener("click", openNewCardForm);
+
 const userInfoDisplay = new UserInfo({
   currentNameSelector: ".profile__name",
   currentOccupationSelector: ".profile__occupation",
-  avatarSelector: ".profile__avatar"
+  avatarSelector: ".profile__avatar",
 });
 
-api
-  .getProfile()
-    .then((res) => {
-      userInfoDisplay.setUserInfo(res.name, res.about);
-      userInfoDisplay.setUserAvatar(res.avatar);
-      userInfoDisplay.setUserId(res._id);
-    })
-
-    .catch((err) => {
-      console.log(err);
-    });
-
-  function handleCardClick(name, link) {
-    pictureOpened.open(name, link);
+function handleCardClick(name, link) {
+  pictureOpened.open(name, link);
 }
 
 const pictureOpened = new PopupWithImage("#popup__opened-picture");
@@ -117,17 +107,19 @@ pictureOpened.setEventListeners();
 const formForProfile = new PopupWithForm(
   "#popup__change-name",
   ({ name, occupation }) => {
-    userInfoDisplay.setUserInfo(name, occupation);
+
     formForProfile.renderLoading(true);
     api
       .editProfile({ name: name, about: occupation })
-      .then((res) => console.log(res))
+      .then(() => {
+        userInfoDisplay.setUserInfo(name, occupation);
+        formForProfile.close();
+      })
       .catch((err) => {
         console.log(err);
       })
       .finally(() => {
         formForProfile.renderLoading(false);
-        formForProfile.close();
       });
   }
 );
@@ -141,9 +133,14 @@ function openNamePopup() {
   profileValidation.resetValidation();
 }
 
-function createCard(data, api) {
-  const card = new Card(data, "#new-card", handleCardClick, userInfoDisplay.getUserId());
-  const cardElement = card.createCard(api);
+function createCard(data) {
+  const card = new Card(
+    data,
+    "#new-card",
+    handleCardClick,
+    userInfoDisplay.getUserId()
+  );
+  const cardElement = card.createCard();
   return cardElement;
 }
 
@@ -155,12 +152,14 @@ function openAvatarPopup() {
 const formForNewAvatar = new PopupWithForm(
   "#popup__new-avatar",
   ({ source }) => {
-    userInfoDisplay.setUserAvatar(source);
     formForNewAvatar.renderLoading(true);
-    api.changeAvatar(source).finally(() => {
-      formForNewAvatar.renderLoading(false);
-      formForNewAvatar.close();
-    });
+    api.changeAvatar(source)
+      .then(() => {
+        userInfoDisplay.setUserAvatar(source);
+        formForNewAvatar.close()})
+      .finally(() => {
+        formForNewAvatar.renderLoading(false);
+      });
   }
 );
 formForNewAvatar.setEventListeners();

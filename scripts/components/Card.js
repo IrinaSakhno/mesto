@@ -27,16 +27,18 @@ export class Card {
   _likeCard(evt, api) {
     const eventTarget = evt.target;
     if (eventTarget.classList.contains("elements__like_active")) {
-      eventTarget.classList.remove("elements__like_active");
       api.removeLike(this._cardId)
-        .then((res) => {this._likeQuantity.textContent=res.likes.length})
+        .then((res) => {
+          eventTarget.classList.remove("elements__like_active");
+          this._likeQuantity.textContent=res.likes.length})
         .catch((err) => {
           console.log(err);
         });
     } else {
-      eventTarget.classList.add("elements__like_active");
       api.putLike(this._cardId)
-      .then((res) => {this._likeQuantity.textContent=res.likes.length})
+      .then((res) => {
+        eventTarget.classList.add("elements__like_active");
+        this._likeQuantity.textContent=res.likes.length})
       .catch((err) => {
         console.log(err);
       });
