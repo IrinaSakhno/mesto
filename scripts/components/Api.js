@@ -5,6 +5,12 @@ export class Api {
       this.contentType = options.headers.contentType;
     }
   
+    _getResponseData(res) {
+      if (res.ok) {
+          return res.json();
+      }
+      return Promise.reject(`Ошибка: ${res.status}`);
+    }
 
     getProfile() {
       return fetch(`${this.baseUrl}/users/me`, {
@@ -15,11 +21,7 @@ export class Api {
         }
       })
         .then(res => {
-          if (res.ok) {
-            return res.json();
-          }
-    
-          return Promise.reject(`Ошибка: ${res.status}`);
+          return this._getResponseData(res);
         });
     }
 
@@ -32,11 +34,7 @@ export class Api {
           }
         })
           .then(res => {
-            if (res.ok) {
-              return res.json();
-            }
-      
-            return Promise.reject(`Ошибка: ${res.status}`);
+            return this._getResponseData(res);
           });
     } 
 
@@ -53,11 +51,7 @@ export class Api {
         })
       })
         .then(res => {
-          if (res.ok) {
-            return res.json();
-          }
-    
-          return Promise.reject(`Ошибка: ${res.status}`);
+          return this._getResponseData(res);
         });
     }
 
@@ -74,11 +68,7 @@ export class Api {
         })
       })
         .then(res => {
-          if (res.ok) {
-            return res.json();
-          }
-    
-          return Promise.reject(`Ошибка: ${res.status}`);
+          return this._getResponseData(res);
         });
     }
 
@@ -91,11 +81,7 @@ export class Api {
         }
       })
         .then(res => {
-          if (res.ok) {
-            return res.json();
-          }
-    
-          return Promise.reject(`Ошибка: ${res.status}`);
+          return this._getResponseData(res);
         });
     }
 
@@ -108,11 +94,7 @@ export class Api {
         }
       })
         .then(res => {
-          if (res.ok) {
-            return res.json();
-          }
-    
-          return Promise.reject(`Ошибка: ${res.status}`);
+          return this._getResponseData(res);
         });
     }
     
@@ -125,11 +107,7 @@ export class Api {
         }
       })
         .then(res => {
-          if (res.ok) {
-            return res.json();
-          }
-    
-          return Promise.reject(`Ошибка: ${res.status}`);
+          return this._getResponseData(res);
         });
     }
 
@@ -145,11 +123,7 @@ export class Api {
         })
       })
         .then(res => {
-          if (res.ok) {
-            return res.json();
-          }
-    
-          return Promise.reject(`Ошибка: ${res.status}`);
+          return this._getResponseData(res);
         });
     }
   

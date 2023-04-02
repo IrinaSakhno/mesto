@@ -92,22 +92,23 @@ api
 const userInfoDisplay = new UserInfo({
   currentNameSelector: ".profile__name",
   currentOccupationSelector: ".profile__occupation",
+  avatarSelector: ".profile__avatar"
 });
 
 api
   .getProfile()
-  .then((res) => {
-    document.querySelector(".profile__name").textContent = res.name;
-    document.querySelector(".profile__occupation").textContent = res.about;
-    document.querySelector(".profile__avatar").src = res.avatar;
-  })
+    .then((res) => {
+      userInfoDisplay.setUserInfo(res.name, res.about);
+      userInfoDisplay.setUserAvatar(res.avatar);
+      userInfoDisplay.setUserId(res._id);
+    })
 
-  .catch((err) => {
-    console.log(err);
-  });
+    .catch((err) => {
+      console.log(err);
+    });
 
-function handleCardClick(name, link) {
-  pictureOpened.open(name, link);
+  function handleCardClick(name, link) {
+    pictureOpened.open(name, link);
 }
 
 const pictureOpened = new PopupWithImage("#popup__opened-picture");
@@ -138,7 +139,7 @@ function openNamePopup() {
 }
 
 function createCard(data, api) {
-  const card = new Card(data, "#new-card", handleCardClick);
+  const card = new Card(data, "#new-card", handleCardClick, userInfoDisplay.getUserId());
   const cardElement = card.createCard(api);
   return cardElement;
 }
@@ -151,7 +152,7 @@ function openAvatarPopup() {
 const formForNewAvatar = new PopupWithForm(
   "#popup__new-avatar",
   ({ source }) => {
-    document.querySelector(".profile__avatar").src = source;
+    userInfoDisplay.setUserAvatar(source);
     formForNewAvatar.renderLoading(true);
     api.changeAvatar(source).finally(() => {
       formForNewAvatar.renderLoading(false);

@@ -4,7 +4,7 @@ export class Card {
   _link = "";
   _templateSelector = "";
   
-  constructor (data, templateSelector, handleCardClick) {
+  constructor (data, templateSelector, handleCardClick, userId) {
     this._name = data.name;
     this._link = data.link;
     this._templateSelector = templateSelector;
@@ -20,7 +20,8 @@ export class Card {
     this._likes = data.likes;
     this._cardId = data.cardId;
     this._ownerId = data.ownerId;
-    this._myId = 'c61cf0854b6c5e975ca1e6cc';
+    // this._myId = 'c61cf0854b6c5e975ca1e6cc';
+    this._myId = userId;
   }
   
   _likeCard(evt, api) {
