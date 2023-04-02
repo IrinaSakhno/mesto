@@ -1,19 +1,28 @@
 import { Popup } from './Popup.js';
+import { deleteConfirmationButton } from '../utils/constants.js';
 
 export class PopupWithConfirmation extends Popup {
-    constructor(popupSelector) {
+    constructor(popupSelector, deleteCard) {
         super(popupSelector);
+        this._deleteCard = deleteCard;
     }
     
-    open(card) {
+    open(cardElement, cardId) {
         super.open();
-        this._popup.addEventListener('submit', this._removeCard);
+        deleteConfirmationButton.addEventListener('click', () => this._removeCard(cardElement, cardId));
+
     }
 
     close() {
         super.close();
-        this._popupSelector.removeEventListener('submit', this._removeCard);
+        deleteConfirmationButton.removeEventListener('click', this._removeCard);
     } 
     
+    _removeCard(cardElement, cardId) {
+        cardElement.remove();
+        cardElement = null;
+        this._deleteCard(cardId);
+        this.close();
+    }
 
 }

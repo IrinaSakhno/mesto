@@ -5,7 +5,7 @@ export class Card {
   _link = "";
   _templateSelector = "";
   
-  constructor (data, templateSelector, handleCardClick, userId, putLike, removeLike) {
+  constructor (data, templateSelector, handleCardClick, userId, putLike, removeLike, deleteCard) {
     this._name = data.name;
     this._link = data.link;
     this._templateSelector = templateSelector;
@@ -24,6 +24,7 @@ export class Card {
     this._myId = userId;
     this._putLike = putLike;
     this._removeLike = removeLike;
+    this._deleteCard = deleteCard;
   }
   
   _likeCard(evt) {
@@ -50,24 +51,12 @@ export class Card {
     
   }
   
-  _removeCard(evt, api) {
-    // const deletingItem = evt.target.closest(".elements__item");
-    this._galleryElement.remove();
-    this._galleryElement = null;
-    api.deleteCard(this._cardId);
-  }
-  
-  _confirmCardRemoving(evt, api) {
-    confirmationOFDeleting.open();
+  _confirmCardRemoving() {
+    confirmationOFDeleting.open(this._galleryElement, this._cardId);
     confirmationOFDeleting.setEventListeners();
-    const buttonDeletingCard = document.querySelector('.popup__delete-confirmation-button');
-    buttonDeletingCard.addEventListener("click", () => {
-      this._removeCard(evt, api);
-      confirmationOFDeleting.close();
-    });
   }
 
-  _setEventListeners(api) {
+  _setEventListeners() {
     this._likeButton.addEventListener("click", (evt) => { this._likeCard(evt) });
     this._trashButton.addEventListener("click", (evt) => {this._confirmCardRemoving(evt)});
     this._galleryImage.addEventListener("click", () => {
@@ -75,7 +64,7 @@ export class Card {
     });
   }
   
-  createCard(api) {
+  createCard() {
     this._galleryImage.src = this._link;
     this._galleryImage.alt = this._name;
     this._galleryElement.querySelector(".elements__card-name").textContent = this._name;
@@ -88,7 +77,7 @@ export class Card {
     if (this._ownerId !== this._myId) {
       this._trashButton.remove();
     }
-    this._setEventListeners(api);
+    this._setEventListeners();
   
     return this._galleryElement;
   }

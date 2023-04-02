@@ -19,7 +19,8 @@ import { PopupWithImage } from "../scripts/components/PopupWithImage.js";
 import { UserInfo } from "../scripts/components/UserInfo.js";
 import { Api } from "../scripts/components/Api";
 import { PopupWithConfirmation } from "../scripts/components/PopupWithConfirmation.js";
-export const confirmationOFDeleting = new PopupWithConfirmation('#popup__delete-card'); 
+export const confirmationOFDeleting = new PopupWithConfirmation('#popup__delete-card', deleteCard); 
+
 
 const api = new Api({
   baseUrl: "https://mesto.nomoreparties.co/v1/cohort-62",
@@ -143,13 +144,17 @@ function removeLike(cardId) {
   return api.removeLike(cardId);
 }
 
+function deleteCard(cardId) {
+  return api.deleteCard(cardId);
+}
+
 function createCard(data) {
   const card = new Card(
     data,
     "#new-card",
     handleCardClick,
     userInfoDisplay.getUserId(), 
-    putLike, removeLike
+    putLike, removeLike, deleteCard
   );
   const cardElement = card.createCard();
   return cardElement;
@@ -177,6 +182,8 @@ formForNewAvatar.setEventListeners();
 
 editButtonAvatar.addEventListener("click", openAvatarPopup);
 buttonEditProfile.addEventListener("click", openNamePopup);
+
+deleteConfirmationButton.addEventListener('click', confirmationOFDeleting.deleteCard)
 
 const profileValidation = new FormValidator(
   settings,
