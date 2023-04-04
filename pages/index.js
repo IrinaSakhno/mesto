@@ -19,8 +19,9 @@ import { PopupWithImage } from "../scripts/components/PopupWithImage.js";
 import { UserInfo } from "../scripts/components/UserInfo.js";
 import { Api } from "../scripts/components/Api";
 import { PopupWithConfirmation } from "../scripts/components/PopupWithConfirmation.js";
-export const confirmationOFDeleting = new PopupWithConfirmation('#popup__delete-card', deleteCard); 
 
+const confirmationOFDeleting = new PopupWithConfirmation('#popup__delete-card');
+confirmationOFDeleting.setEventListeners(); 
 
 const api = new Api({
   baseUrl: "https://mesto.nomoreparties.co/v1/cohort-62",
@@ -144,18 +145,44 @@ function removeLike(cardId) {
   return api.removeLike(cardId);
 }
 
-function deleteCard(cardId) {
-  return api.deleteCard(cardId);
-}
-
 function createCard(data) {
-  const card = new Card(
-    data,
-    "#new-card",
-    handleCardClick,
-    userInfoDisplay.getUserId(), 
-    putLike, removeLike, deleteCard
-  );
+  const card = new Card({ 
+    data: data,
+    templateSelector: "#new-card",
+    handleCardClick: handleCardClick,
+    userId: userInfoDisplay.getUserId(), 
+    putLike: (cardId) => {
+      api.putLike(cardId)
+        .then((data) => {
+          card.handleLike(data);
+        })
+        .catch((err) => {
+          console.log(`Ошибка: ${err}`);
+        });
+    },
+    removeLike: (cardId) => {
+      api.removeLike(cardId)
+        .then((data) => {
+          card.handleLike(data);
+        })
+        .catch((err) => {
+          console.log(`Ошибка: ${err}`);
+        });
+    },
+    handleTrashButtonClick: (cardId) => {
+      confirmationOFDeleting.open();
+      confirmationOFDeleting.submitCallback(() => {
+        api.deleteCard(cardId)
+          .then(() => {
+            card.removeCard()
+            confirmationOFDeleting.close()
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+      })
+    },
+});
   const cardElement = card.createCard();
   return cardElement;
 }
@@ -173,6 +200,11 @@ const formForNewAvatar = new PopupWithForm(
       .then(() => {
         userInfoDisplay.setUserAvatar(source);
         formForNewAvatar.close()})
+
+      .catch((err) => {
+          console.log(err);
+      })
+
       .finally(() => {
         formForNewAvatar.renderLoading(false);
       });
