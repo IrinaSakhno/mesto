@@ -170,7 +170,6 @@ function createCard(data) {
         });
     },
     handleTrashButtonClick: (cardId) => {
-      confirmationOFDeleting.open();
       confirmationOFDeleting.submitCallback(() => {
         api.deleteCard(cardId)
           .then(() => {
@@ -181,6 +180,7 @@ function createCard(data) {
             console.log(err);
           })
       })
+      confirmationOFDeleting.open();
     },
 });
   const cardElement = card.createCard();
